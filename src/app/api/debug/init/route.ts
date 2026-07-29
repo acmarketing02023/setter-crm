@@ -6,13 +6,32 @@ export async function POST() {
     // For SQLite with Prisma, we need to ensure tables exist
 
     // Try to create tables using raw SQL (PostgreSQL syntax)
+    // First, create enum types
+    await prisma.$executeRawUnsafe(`
+      CREATE TYPE "Role" AS ENUM ('SETTER', 'OWNER');
+    `).catch(() => {
+      // Enum already exists
+    });
+
+    await prisma.$executeRawUnsafe(`
+      CREATE TYPE "CallOutcome" AS ENUM ('NO_ANSWER', 'NOT_INTERESTED', 'CALLBACK', 'BOOKED');
+    `).catch(() => {});
+
+    await prisma.$executeRawUnsafe(`
+      CREATE TYPE "BookingStatus" AS ENUM ('SCHEDULED', 'WON', 'LOST', 'CANCELED');
+    `).catch(() => {});
+
+    await prisma.$executeRawUnsafe(`
+      CREATE TYPE "BookingSource" AS ENUM ('COLD_CALL', 'SETTER_DIRECT', 'LANDING_PAGE', 'OTHER');
+    `).catch(() => {});
+
     await prisma.$executeRawUnsafe(`
       CREATE TABLE IF NOT EXISTS "User" (
         "id" TEXT NOT NULL PRIMARY KEY,
         "name" TEXT NOT NULL,
         "email" TEXT NOT NULL UNIQUE,
         "passwordHash" TEXT NOT NULL,
-        "role" TEXT NOT NULL,
+        "role" "Role" NOT NULL,
         "createdAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
       );
     `);
@@ -23,7 +42,7 @@ export async function POST() {
         "setterId" TEXT NOT NULL,
         "contractorName" TEXT NOT NULL,
         "phone" TEXT,
-        "outcome" TEXT NOT NULL,
+        "outcome" "CallOutcome" NOT NULL,
         "note" TEXT,
         "createdAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY ("setterId") REFERENCES "User" ("id")
@@ -40,8 +59,8 @@ export async function POST() {
         "scheduledAt" TIMESTAMP NOT NULL,
         "setterNotes" TEXT NOT NULL,
         "closerBriefing" TEXT NOT NULL,
-        "status" TEXT NOT NULL DEFAULT 'SCHEDULED',
-        "source" TEXT NOT NULL DEFAULT 'SETTER_DIRECT',
+        "status" "BookingStatus" NOT NULL DEFAULT 'SCHEDULED',
+        "source" "BookingSource" NOT NULL DEFAULT 'SETTER_DIRECT',
         "createdAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         "viewedAt" TIMESTAMP,
         FOREIGN KEY ("callId") REFERENCES "Call" ("id"),
