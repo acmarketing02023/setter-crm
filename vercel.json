@@ -1,3 +1,2 @@
 {
-  "buildCommand": "next build && bash vercel-build.sh"
 }
