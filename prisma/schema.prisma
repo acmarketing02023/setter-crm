@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  SETTER
+  OWNER
+}
+
+enum CallOutcome {
+  NO_ANSWER
+  NOT_INTERESTED
+  CALLBACK
+  BOOKED
+}
+
+enum BookingStatus {
+  SCHEDULED
+  WON
+  LOST
+  CANCELED
+}
+
+enum BookingSource {
+  COLD_CALL
+  SETTER_DIRECT
+  LANDING_PAGE
+  OTHER
+}
+
+model User {
+  id           String    @id @default(cuid())
+  name         String
+  email        String    @unique
+  passwordHash String
+  role         Role
+  createdAt    DateTime  @default(now())
+
+  calls        Call[]
+  bookings     Booking[]
+}
+
+model Call {
+  id              String      @id @default(cuid())
+  setter          User        @relation(fields: [setterId], references: [id])
+  setterId        String
+  contractorName  String
+  phone           String?
+  outcome         CallOutcome
+  note            String?
+  createdAt       DateTime    @default(now())
+
+  booking         Booking?
+}
+
+model Booking {
+  id              String        @id @default(cuid())
+  call            Call?         @relation(fields: [callId], references: [id])
+  callId          String?       @unique
+  setter          User          @relation(fields: [setterId], references: [id])
+  setterId        String
+  contractorName  String
+  phone           String?
+  scheduledAt     DateTime
+  setterNotes     String
+  closerBriefing  String
+  status          BookingStatus @default(SCHEDULED)
+  source          BookingSource @default(SETTER_DIRECT)
+  createdAt       DateTime      @default(now())
+  viewedAt        DateTime?
+}
