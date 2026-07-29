@@ -1,0 +1,6 @@
+{
+  "buildCommand": "next build && bash vercel-build.sh",
+  "env": {
+    "NEXTAUTH_SECRET": "@nextauth_secret"
+  }
+}
