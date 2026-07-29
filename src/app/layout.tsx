@@ -37,3 +37,4 @@ export default async function RootLayout({
     </html>
   );
 }
+// Deployment trigger - Wed Jul 29 16:02:57 CDT 2026
