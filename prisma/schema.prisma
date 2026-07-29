@@ -1,3 +1,4 @@
+// Using PostgreSQL for production database
 generator client {
   provider = "prisma-client-js"
 }
