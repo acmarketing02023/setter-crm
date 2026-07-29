@@ -5,7 +5,7 @@ export async function POST() {
     // Create the schema if it doesn't exist
     // For SQLite with Prisma, we need to ensure tables exist
 
-    // Try to create tables using raw SQL
+    // Try to create tables using raw SQL (PostgreSQL syntax)
     await prisma.$executeRawUnsafe(`
       CREATE TABLE IF NOT EXISTS "User" (
         "id" TEXT NOT NULL PRIMARY KEY,
@@ -13,7 +13,7 @@ export async function POST() {
         "email" TEXT NOT NULL UNIQUE,
         "passwordHash" TEXT NOT NULL,
         "role" TEXT NOT NULL,
-        "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+        "createdAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
       );
     `);
 
@@ -25,7 +25,7 @@ export async function POST() {
         "phone" TEXT,
         "outcome" TEXT NOT NULL,
         "note" TEXT,
-        "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        "createdAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY ("setterId") REFERENCES "User" ("id")
       );
     `);
@@ -37,13 +37,13 @@ export async function POST() {
         "setterId" TEXT NOT NULL,
         "contractorName" TEXT NOT NULL,
         "phone" TEXT,
-        "scheduledAt" DATETIME NOT NULL,
+        "scheduledAt" TIMESTAMP NOT NULL,
         "setterNotes" TEXT NOT NULL,
         "closerBriefing" TEXT NOT NULL,
         "status" TEXT NOT NULL DEFAULT 'SCHEDULED',
         "source" TEXT NOT NULL DEFAULT 'SETTER_DIRECT',
-        "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        "viewedAt" DATETIME,
+        "createdAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        "viewedAt" TIMESTAMP,
         FOREIGN KEY ("callId") REFERENCES "Call" ("id"),
         FOREIGN KEY ("setterId") REFERENCES "User" ("id")
       );
