@@ -65,7 +65,9 @@ export default function LoginPage() {
       return;
     }
 
-    router.push("/");
+    // Redirect directly to dashboard based on role
+    const dashboard = role === "owner" ? "/owner" : "/setter";
+    router.push(dashboard);
     router.refresh();
   }
 
