@@ -12,25 +12,40 @@ export default async function OwnerPage() {
 
   const CALLS_PAGE_SIZE = 50;
 
-  const [callsPage, bookings, setters] = await Promise.all([
-    prisma.call.findMany({
+  // Fetch data sequentially to isolate any errors
+  let callsPage, bookings, setters;
+
+  try {
+    callsPage = await prisma.call.findMany({
       orderBy: { createdAt: "desc" },
       include: { setter: { select: { name: true } } },
       take: CALLS_PAGE_SIZE + 1,
-    }),
-    prisma.booking.findMany({
+    });
+  } catch (e) {
+    console.error("Error fetching calls:", e);
+    callsPage = [];
+  }
+
+  try {
+    bookings = await prisma.booking.findMany({
       orderBy: { scheduledAt: "asc" },
       include: { setter: { select: { name: true } } },
-    }),
-    prisma.user.findMany({
-      // Include the Owner too — round-robin falls back to the Owner when no
-      // setters exist yet, and the reassign dropdown needs every role that
-      // can actually hold a booking's setterId as a selectable option.
+    });
+  } catch (e) {
+    console.error("Error fetching bookings:", e);
+    bookings = [];
+  }
+
+  try {
+    setters = await prisma.user.findMany({
       where: { role: { in: ["SETTER", "OWNER"] } },
       select: { id: true, name: true },
       orderBy: { name: "asc" },
-    }),
-  ]);
+    });
+  } catch (e) {
+    console.error("Error fetching setters:", e);
+    setters = [];
+  }
 
   const hasMoreCalls = callsPage.length > CALLS_PAGE_SIZE;
   const calls = callsPage.slice(0, CALLS_PAGE_SIZE);
