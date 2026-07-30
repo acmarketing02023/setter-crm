@@ -1,3 +1,5 @@
+import nodemailer from "nodemailer";
+
 // Optional real-time alerts. No-ops if SLACK_WEBHOOK_URL isn't configured,
 // so this is safe to call from any code path without extra guards.
 export async function notifySlack(text: string) {
@@ -27,8 +29,7 @@ export async function sendLeadConfirmationEmail(
   if (!user || !pass || !to) return;
 
   try {
-    const nodemailer = await import("nodemailer");
-    const transporter = nodemailer.default.createTransport({
+    const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: { user, pass },
     });
