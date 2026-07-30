@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { computeCallStats } from "@/lib/stats";
 import { Header } from "@/components/Header";
 import { OwnerDashboard } from "@/components/OwnerDashboard";
+import type { Call, Booking, User } from "@prisma/client";
 
 export default async function OwnerPage() {
   const session = await auth();
@@ -13,7 +14,9 @@ export default async function OwnerPage() {
   const CALLS_PAGE_SIZE = 50;
 
   // Fetch data sequentially to isolate any errors
-  let callsPage, bookings, setters;
+  let callsPage: (Call & { setter: { name: string } })[] = [];
+  let bookings: (Booking & { setter: { name: string } })[] = [];
+  let setters: { id: string; name: string }[] = [];
 
   try {
     callsPage = await prisma.call.findMany({
