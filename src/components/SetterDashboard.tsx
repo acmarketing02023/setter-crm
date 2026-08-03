@@ -64,6 +64,15 @@ export function SetterDashboard({
     setCloserBriefing("");
   }
 
+  async function parseErrorResponse(res: Response, fallback: string): Promise<string> {
+    try {
+      const data = await res.json();
+      return data.error ?? fallback;
+    } catch {
+      return `${fallback} (${res.status})`;
+    }
+  }
+
   async function logCall(chosenOutcome: CallOutcome) {
     if (!contractorName.trim()) {
       setError("Enter the contractor's name first.");
@@ -84,7 +93,16 @@ export function SetterDashboard({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ contractorName, phone, outcome: chosenOutcome }),
       });
-      if (!res.ok) throw new Error((await res.json()).error ?? "Failed to log call");
+      if (!res.ok) {
+        let errorMsg = "Failed to log call";
+        try {
+          const errorData = await res.json();
+          errorMsg = errorData.error ?? errorMsg;
+        } catch {
+          errorMsg = `Server error: ${res.status}`;
+        }
+        throw new Error(errorMsg);
+      }
       resetForm();
       router.refresh();
     } catch (e) {
@@ -116,7 +134,9 @@ export function SetterDashboard({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ contractorName, phone, outcome: "BOOKED" }),
       });
-      if (!callRes.ok) throw new Error((await callRes.json()).error ?? "Failed to log call");
+      if (!callRes.ok) {
+        throw new Error(await parseErrorResponse(callRes, "Failed to log call"));
+      }
       const call = await callRes.json();
 
       const bookingRes = await fetch("/api/bookings", {
@@ -131,7 +151,9 @@ export function SetterDashboard({
           closerBriefing,
         }),
       });
-      if (!bookingRes.ok) throw new Error((await bookingRes.json()).error ?? "Failed to save booking");
+      if (!bookingRes.ok) {
+        throw new Error(await parseErrorResponse(bookingRes, "Failed to save booking"));
+      }
 
       resetForm();
       router.refresh();
@@ -157,7 +179,7 @@ export function SetterDashboard({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(callEditForm),
       });
-      if (!res.ok) throw new Error((await res.json()).error ?? "Failed to save changes");
+      if (!res.ok) throw new Error(await parseErrorResponse(res, "Failed to save changes"));
       setEditingCallId(null);
       setCallEditForm(null);
       router.refresh();
@@ -174,7 +196,7 @@ export function SetterDashboard({
     setError(null);
     try {
       const res = await fetch(`/api/calls/${id}`, { method: "DELETE" });
-      if (!res.ok) throw new Error((await res.json()).error ?? "Failed to delete call");
+      if (!res.ok) throw new Error(await parseErrorResponse(res, "Failed to delete call"));
       router.refresh();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Something went wrong");
@@ -210,7 +232,7 @@ export function SetterDashboard({
           closerBriefing: bookingEditForm.closerBriefing,
         }),
       });
-      if (!res.ok) throw new Error((await res.json()).error ?? "Failed to save changes");
+      if (!res.ok) throw new Error(await parseErrorResponse(res, "Failed to save changes"));
       setEditingBookingId(null);
       setBookingEditForm(null);
       router.refresh();
@@ -227,7 +249,7 @@ export function SetterDashboard({
     setError(null);
     try {
       const res = await fetch(`/api/bookings/${id}`, { method: "DELETE" });
-      if (!res.ok) throw new Error((await res.json()).error ?? "Failed to delete booking");
+      if (!res.ok) throw new Error(await parseErrorResponse(res, "Failed to delete booking"));
       router.refresh();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Something went wrong");
