@@ -252,14 +252,27 @@ export function OwnerDashboard({
   return (
     <div className="space-y-8">
       <section className="grid grid-cols-3 gap-6">
+        {/* Box 1: Cold Calls */}
         <div className="group rounded-2xl border border-gray-200 bg-white p-8 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all">
           <div className="flex items-center justify-between">
-            <div>
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest">Today's Calls</p>
-              <p className="mt-4 text-5xl font-bold text-gray-900">{stats.today.calls}</p>
-              <p className="mt-3 text-sm text-red-600 font-semibold">{stats.today.booked} booked</p>
+            <div className="flex-1">
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest">Cold Calls Made</p>
+              <div className="mt-6 space-y-3">
+                <div className="flex items-baseline gap-3">
+                  <p className="text-3xl font-bold text-gray-900">{stats.today.calls}</p>
+                  <p className="text-xs text-gray-500">Today</p>
+                </div>
+                <div className="flex items-baseline gap-3">
+                  <p className="text-3xl font-bold text-gray-900">{stats.week.calls}</p>
+                  <p className="text-xs text-gray-500">This Week</p>
+                </div>
+                <div className="flex items-baseline gap-3">
+                  <p className="text-3xl font-bold text-gray-900">{stats.month.calls}</p>
+                  <p className="text-xs text-gray-500">This Month</p>
+                </div>
+              </div>
             </div>
-            <div className="h-16 w-16 rounded-full bg-gradient-to-br from-red-50 to-red-100 flex items-center justify-center group-hover:from-red-100 group-hover:to-red-200 transition-colors">
+            <div className="h-16 w-16 rounded-full bg-gradient-to-br from-red-50 to-red-100 flex items-center justify-center group-hover:from-red-100 group-hover:to-red-200 transition-colors flex-shrink-0">
               <svg className="w-8 h-8 text-red-600" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M3 5a2 2 0 012-2h3.28a1 1 0 00.948-.684l1.498-4.493a1 1 0 011.502-.684l1.498 4.493a1 1 0 00.948.684H19a2 2 0 012 2v2a1 1 0 01-1 1H4a1 1 0 01-1-1V5z M3 15a2 2 0 012-2h3.28a1 1 0 00.948-.684l1.498-4.493a1 1 0 011.502-.684l1.498 4.493a1 1 0 00.948.684H19a2 2 0 012 2v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2z" />
               </svg>
@@ -267,31 +280,46 @@ export function OwnerDashboard({
           </div>
         </div>
 
+        {/* Box 2: Bookings This Week */}
         <div className="group rounded-2xl border border-gray-200 bg-white p-8 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest">This Week</p>
-              <p className="mt-4 text-5xl font-bold text-gray-900">{stats.week.calls}</p>
-              <p className="mt-3 text-sm text-emerald-600 font-semibold">{stats.week.booked} booked</p>
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest">Bookings This Week</p>
+              <p className="mt-6 text-6xl font-bold text-gray-900">{stats.week.booked}</p>
+              <p className="mt-3 text-sm text-blue-600 font-semibold">Scheduled bookings</p>
             </div>
-            <div className="h-16 w-16 rounded-full bg-gradient-to-br from-emerald-50 to-emerald-100 flex items-center justify-center group-hover:from-emerald-100 group-hover:to-emerald-200 transition-colors">
-              <svg className="w-8 h-8 text-emerald-600" fill="currentColor" viewBox="0 0 24 24">
+            <div className="h-16 w-16 rounded-full bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center group-hover:from-blue-100 group-hover:to-blue-200 transition-colors">
+              <svg className="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z" />
               </svg>
             </div>
           </div>
         </div>
 
+        {/* Box 3: Expected Bookings This Month */}
         <div className="group rounded-2xl border border-gray-200 bg-white p-8 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest">This Month</p>
-              <p className="mt-4 text-5xl font-bold text-gray-900">{stats.month.calls}</p>
-              <p className="mt-3 text-sm text-blue-600 font-semibold">{stats.month.booked} booked</p>
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest">Expected This Month</p>
+              <p className="mt-6 text-6xl font-bold text-gray-900">{(() => {
+                const today = new Date();
+                const daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
+                const dayOfMonth = today.getDate();
+                const daysRemaining = daysInMonth - dayOfMonth;
+                const currentBookings = stats.month.booked;
+
+                if (dayOfMonth === 1) return currentBookings;
+                const avgPerDay = currentBookings / dayOfMonth;
+                const projected = Math.round(currentBookings + (avgPerDay * daysRemaining));
+                return projected;
+              })()}</p>
+              <p className="mt-3 text-sm text-purple-600 font-semibold">{stats.month.booked} booked so far</p>
             </div>
-            <div className="h-16 w-16 rounded-full bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center group-hover:from-blue-100 group-hover:to-blue-200 transition-colors">
-              <svg className="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+            <div className="h-16 w-16 rounded-full bg-gradient-to-br from-purple-50 to-purple-100 flex items-center justify-center group-hover:from-purple-100 group-hover:to-purple-200 transition-colors">
+              <svg className="w-8 h-8 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z" />
+                <polyline points="13 2 13 9 20 9" />
+                <path d="M9 15h2m-2 4h6" />
               </svg>
             </div>
           </div>
