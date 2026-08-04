@@ -7,6 +7,7 @@ import { OwnerDashboard } from "@/components/OwnerDashboard";
 import type { Call, Booking, User } from "@prisma/client";
 
 export default async function OwnerPage() {
+  // Force redeploy - professional dashboard redesign
   const session = await auth();
   if (!session?.user) redirect("/login");
   if (session.user.role !== "OWNER") redirect("/setter");
