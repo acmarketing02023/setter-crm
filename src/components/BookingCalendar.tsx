@@ -97,7 +97,7 @@ export function BookingCalendar({ bookings }: { bookings: Booking[] }) {
           return (
             <div
               key={dayStr}
-              className={`min-h-32 rounded-lg border p-2 ${
+              className={`min-h-40 rounded-lg border p-2 ${
                 isToday
                   ? "border-emerald-600 bg-emerald-950/20"
                   : "border-neutral-700 bg-neutral-800/40"
@@ -114,7 +114,7 @@ export function BookingCalendar({ bookings }: { bookings: Booking[] }) {
                 {dayBookings.map((booking) => (
                   <div
                     key={booking.id}
-                    className={`truncate rounded px-1.5 py-1 text-xs font-medium ${
+                    className={`rounded px-2 py-1.5 text-xs space-y-0.5 ${
                       booking.status === "SCHEDULED"
                         ? "bg-blue-900/40 text-blue-200"
                         : booking.status === "WON"
@@ -123,9 +123,19 @@ export function BookingCalendar({ bookings }: { bookings: Booking[] }) {
                         ? "bg-red-900/40 text-red-200"
                         : "bg-neutral-700/40 text-neutral-300"
                     }`}
-                    title={`${booking.contractorName} - ${booking.setter.name}`}
+                    title={`${booking.contractorName} - ${booking.setter.name} - ${booking.phone || "no phone"}`}
                   >
-                    {booking.contractorName.split(" ")[0]}
+                    <div className="font-semibold truncate text-xs leading-tight">
+                      {booking.contractorName.length > 20
+                        ? booking.contractorName.substring(0, 17) + "..."
+                        : booking.contractorName}
+                    </div>
+                    <div className="text-xs opacity-90">
+                      {format(new Date(booking.scheduledAt), "h:mm a")}
+                    </div>
+                    <div className="text-xs opacity-75">
+                      {booking.setter.name}
+                    </div>
                   </div>
                 ))}
               </div>
