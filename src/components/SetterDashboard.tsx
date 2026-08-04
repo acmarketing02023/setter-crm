@@ -346,8 +346,8 @@ export function SetterDashboard({
               <textarea
                 value={setterNotes}
                 onChange={(e) => setSetterNotes(e.target.value)}
-                rows={3}
-                className="mt-1 w-full rounded-md border border-neutral-700 bg-neutral-950 px-3 py-2 outline-none focus:border-neutral-500"
+                rows={6}
+                className="mt-1 w-full rounded-md border border-neutral-700 bg-neutral-950 px-3 py-3 text-base outline-none focus:border-neutral-500"
               />
             </div>
             <div>
@@ -355,8 +355,8 @@ export function SetterDashboard({
               <textarea
                 value={closerBriefing}
                 onChange={(e) => setCloserBriefing(e.target.value)}
-                rows={3}
-                className="mt-1 w-full rounded-md border border-neutral-700 bg-neutral-950 px-3 py-2 outline-none focus:border-neutral-500"
+                rows={6}
+                className="mt-1 w-full rounded-md border border-neutral-700 bg-neutral-950 px-3 py-3 text-base outline-none focus:border-neutral-500"
               />
             </div>
             <div className="flex gap-2">
