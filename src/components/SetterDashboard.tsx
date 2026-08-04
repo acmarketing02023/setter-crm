@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 import { CallDTO, BookingDTO, CallOutcome, OUTCOME_LABELS, STATUS_LABELS } from "@/lib/types";
@@ -54,6 +54,58 @@ export function SetterDashboard({
 
   const [editingBookingId, setEditingBookingId] = useState<string | null>(null);
   const [bookingEditForm, setBookingEditForm] = useState<BookingEditForm | null>(null);
+
+  // Notepad state
+  const [notepadVisible, setNotepadVisible] = useState(true);
+  const [notepadText, setNotepadText] = useState("");
+  const [notepadPosition, setNotepadPosition] = useState({ x: window.innerWidth - 380, y: 100 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+  const notepadRef = useRef<HTMLDivElement>(null);
+
+  // Load notepad text from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem("setterNotepad");
+    if (saved) setNotepadText(saved);
+  }, []);
+
+  // Save notepad text to localStorage
+  useEffect(() => {
+    localStorage.setItem("setterNotepad", notepadText);
+  }, [notepadText]);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!notepadRef.current) return;
+    setIsDragging(true);
+    const rect = notepadRef.current.getBoundingClientRect();
+    setDragOffset({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
+
+  useEffect(() => {
+    if (!isDragging) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      setNotepadPosition({
+        x: e.clientX - dragOffset.x,
+        y: e.clientY - dragOffset.y,
+      });
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+    };
+
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [isDragging, dragOffset]);
 
   function resetForm() {
     setContractorName("");
@@ -649,6 +701,53 @@ export function SetterDashboard({
           </div>
         )}
       </section>
+
+      {/* Notepad Toggle Button */}
+      <div className="fixed bottom-6 right-6 z-40">
+        <button
+          onClick={() => setNotepadVisible(!notepadVisible)}
+          className="h-14 w-14 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-500 text-white font-bold text-xl shadow-lg hover:shadow-xl transition-all hover:scale-110 flex items-center justify-center"
+          title={notepadVisible ? "Hide notepad" : "Show notepad"}
+        >
+          {notepadVisible ? "📝" : "📖"}
+        </button>
+      </div>
+
+      {/* Draggable Notepad */}
+      {notepadVisible && (
+        <div
+          ref={notepadRef}
+          className="fixed z-50 w-72 rounded-lg border-2 border-yellow-400 bg-yellow-50 shadow-2xl"
+          style={{
+            left: `${notepadPosition.x}px`,
+            top: `${notepadPosition.y}px`,
+            cursor: isDragging ? "grabbing" : "grab",
+          }}
+        >
+          {/* Notepad Header - Draggable */}
+          <div
+            onMouseDown={handleMouseDown}
+            className="cursor-grab active:cursor-grabbing flex items-center justify-between bg-gradient-to-r from-yellow-400 to-yellow-500 p-3 rounded-t text-white font-bold"
+          >
+            <span>📝 My Notes</span>
+            <button
+              onClick={() => setNotepadVisible(false)}
+              className="text-white hover:bg-yellow-600 rounded px-2 py-1 text-lg"
+            >
+              ✕
+            </button>
+          </div>
+
+          {/* Notepad Content */}
+          <textarea
+            value={notepadText}
+            onChange={(e) => setNotepadText(e.target.value)}
+            placeholder="Write your notes here... They'll be saved automatically!"
+            className="w-full h-64 p-4 border-none resize-none focus:outline-none text-gray-800 font-sans"
+            style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
+          />
+        </div>
+      )}
     </div>
   );
 }
