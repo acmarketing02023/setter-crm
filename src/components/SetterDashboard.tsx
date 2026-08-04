@@ -294,6 +294,57 @@ export function SetterDashboard({
         <StatCard label="This Month" value={stats.month.calls} sub={`${stats.month.booked} booked`} />
       </section>
 
+      {/* Earnings Potential Section */}
+      <section className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
+        <h2 className="mb-6 text-2xl font-bold text-gray-900 flex items-center gap-3">
+          <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center">
+            <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+            </svg>
+          </div>
+          This Week's Potential Earnings
+        </h2>
+
+        <div className="space-y-6">
+          {/* Formula Explanation */}
+          <div className="rounded-lg border border-gray-200 bg-gray-50 p-6">
+            <h3 className="font-semibold text-gray-900 mb-4">How It Works:</h3>
+            <div className="space-y-2 text-sm text-gray-700">
+              <p>• Client value: <span className="font-bold text-green-600">$3,000</span></p>
+              <p>• Expected closing rate: <span className="font-bold text-green-600">50%</span></p>
+              <p>• Your commission: <span className="font-bold text-green-600">25%</span></p>
+              <p className="pt-2 border-t border-gray-300 mt-3">
+                <span className="font-bold">Per booking potential:</span> <span className="text-green-600 font-bold">$3,000 × 50% × 25% = $375</span>
+              </p>
+            </div>
+          </div>
+
+          {/* Your Bookings This Week */}
+          <div className="rounded-lg bg-green-50 border-2 border-green-200 p-6">
+            <h3 className="font-semibold text-gray-900 mb-4">Your Bookings This Week:</h3>
+            <div className="space-y-3">
+              <div className="flex items-baseline justify-between">
+                <span className="text-gray-700">Total bookings:</span>
+                <span className="text-4xl font-bold text-green-600">{stats.week.booked}</span>
+              </div>
+              <div className="flex items-baseline justify-between text-lg">
+                <span className="text-gray-700">Expected closings:</span>
+                <span className="font-bold text-gray-900">{Math.round(stats.week.booked * 0.5)} <span className="text-sm text-gray-600">({stats.week.booked} × 50%)</span></span>
+              </div>
+              <div className="border-t-2 border-green-200 pt-3 mt-3">
+                <div className="flex items-baseline justify-between">
+                  <span className="text-lg font-semibold text-gray-900">Potential earnings:</span>
+                  <span className="text-4xl font-bold text-green-600">${(Math.round(stats.week.booked * 0.5) * 375).toLocaleString()}</span>
+                </div>
+                <p className="text-xs text-gray-600 mt-2">({Math.round(stats.week.booked * 0.5)} closings × $375 per closing)</p>
+              </div>
+            </div>
+          </div>
+
+          <p className="text-sm text-gray-600 italic">💡 These are potential earnings based on average closing rate. Actual earnings depend on your bookings and their close outcomes.</p>
+        </div>
+      </section>
+
       <section className="rounded-xl border border-neutral-800 bg-neutral-900 p-6">
         <h2 className="mb-4 text-lg font-semibold">Log a Call</h2>
 
