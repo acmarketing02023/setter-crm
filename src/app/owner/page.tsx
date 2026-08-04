@@ -58,7 +58,7 @@ export default async function OwnerPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-black">
-      <OwnerHeader name={session.user.name ?? "Owner"} />
+      <OwnerHeader name={session.user.name ?? "Owner"} email={session.user.email} />
       <main className="mx-auto w-full max-w-6xl flex-1 px-6 py-8">
         <OwnerDashboard
           stats={stats}
