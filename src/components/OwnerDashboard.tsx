@@ -6,6 +6,8 @@ import { format } from "date-fns";
 import { CallOutcome, OUTCOME_LABELS, BookingStatus, BookingSource, SOURCE_LABELS } from "@/lib/types";
 import { computeLeaderboard } from "@/lib/stats";
 import { BookingCalendar } from "./BookingCalendar";
+import { StatCardPro } from "./StatCardPro";
+import { SetterLeaderboard } from "./SetterLeaderboard";
 
 type CallRow = {
   id: string;
@@ -250,11 +252,29 @@ export function OwnerDashboard({
   });
 
   return (
-    <div className="space-y-8">
-      <section className="grid grid-cols-3 gap-4">
-        <StatCard label="Today" value={stats.today.calls} sub={`${stats.today.booked} booked`} />
-        <StatCard label="This Week" value={stats.week.calls} sub={`${stats.week.booked} booked`} />
-        <StatCard label="This Month" value={stats.month.calls} sub={`${stats.month.booked} booked`} />
+    <div className="space-y-8 bg-black min-h-screen">
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <StatCardPro
+          label="Today"
+          value={stats.today.calls}
+          subtext={`${stats.today.booked} booked`}
+          icon="📞"
+          trend={stats.today.booked > 0 ? "up" : "neutral"}
+        />
+        <StatCardPro
+          label="This Week"
+          value={stats.week.calls}
+          subtext={`${stats.week.booked} booked`}
+          icon="📊"
+          trend={stats.week.booked > 0 ? "up" : "neutral"}
+        />
+        <StatCardPro
+          label="This Month"
+          value={stats.month.calls}
+          subtext={`${stats.month.booked} booked`}
+          icon="📈"
+          trend={stats.month.booked > 0 ? "up" : "neutral"}
+        />
       </section>
 
       {error && (
@@ -264,6 +284,8 @@ export function OwnerDashboard({
       )}
 
       <BookingCalendar bookings={bookings} />
+
+      <SetterLeaderboard entries={leaderboard} />
 
       <section className="rounded-xl border border-neutral-800 bg-neutral-900 p-6">
         <div className="mb-4 flex items-center justify-between gap-3">

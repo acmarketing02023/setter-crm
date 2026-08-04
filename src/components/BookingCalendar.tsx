@@ -34,9 +34,9 @@ export function BookingCalendar({ bookings }: { bookings: Booking[] }) {
   const paddingDays = Array(firstDayOfWeek).fill(null);
 
   return (
-    <div className="rounded-xl border border-neutral-800 bg-neutral-900 p-6">
+    <div className="rounded-lg border border-neutral-700 bg-neutral-900 p-6">
       <div className="mb-6 flex items-center justify-between">
-        <h2 className="text-xl font-semibold">
+        <h2 className="text-2xl font-bold text-white">
           {format(currentDate, "MMMM yyyy")}
         </h2>
         <div className="flex gap-2">
@@ -99,13 +99,13 @@ export function BookingCalendar({ bookings }: { bookings: Booking[] }) {
               key={dayStr}
               className={`min-h-40 rounded-lg border p-2 ${
                 isToday
-                  ? "border-emerald-600 bg-emerald-950/20"
+                  ? "border-red-600 bg-red-950/20"
                   : "border-neutral-700 bg-neutral-800/40"
               } flex flex-col`}
             >
               <div
                 className={`mb-1 text-xs font-semibold ${
-                  isToday ? "text-emerald-400" : "text-neutral-400"
+                  isToday ? "text-red-500" : "text-neutral-400"
                 }`}
               >
                 {format(day, "d")}
@@ -145,18 +145,18 @@ export function BookingCalendar({ bookings }: { bookings: Booking[] }) {
       </div>
 
       {/* Legend */}
-      <div className="mt-6 flex flex-wrap gap-4 text-xs">
+      <div className="mt-6 flex flex-wrap gap-6 text-sm">
         <div className="flex items-center gap-2">
-          <div className="h-3 w-3 rounded bg-blue-900/40"></div>
-          <span className="text-neutral-400">Scheduled</span>
+          <div className="h-3 w-3 rounded bg-blue-600"></div>
+          <span className="text-neutral-300">Scheduled</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="h-3 w-3 rounded bg-emerald-900/40"></div>
-          <span className="text-neutral-400">Won</span>
+          <div className="h-3 w-3 rounded bg-red-600"></div>
+          <span className="text-neutral-300">Won</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="h-3 w-3 rounded bg-red-900/40"></div>
-          <span className="text-neutral-400">Lost</span>
+          <div className="h-3 w-3 rounded bg-neutral-500"></div>
+          <span className="text-neutral-300">Lost</span>
         </div>
       </div>
     </div>
