@@ -1,0 +1,154 @@
+"use client";
+
+import { useState } from "react";
+import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay } from "date-fns";
+
+type Booking = {
+  id: string;
+  contractorName: string;
+  phone: string | null;
+  scheduledAt: string;
+  status: string;
+  setter: { name: string };
+};
+
+export function BookingCalendar({ bookings }: { bookings: Booking[] }) {
+  const [currentDate, setCurrentDate] = useState(new Date());
+
+  const monthStart = startOfMonth(currentDate);
+  const monthEnd = endOfMonth(currentDate);
+  const daysInMonth = eachDayOfInterval({ start: monthStart, end: monthEnd });
+
+  // Group bookings by day
+  const bookingsByDay = new Map<string, Booking[]>();
+  bookings.forEach((booking) => {
+    const day = format(new Date(booking.scheduledAt), "yyyy-MM-dd");
+    if (!bookingsByDay.has(day)) {
+      bookingsByDay.set(day, []);
+    }
+    bookingsByDay.get(day)!.push(booking);
+  });
+
+  const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const firstDayOfWeek = monthStart.getDay();
+  const paddingDays = Array(firstDayOfWeek).fill(null);
+
+  return (
+    <div className="rounded-xl border border-neutral-800 bg-neutral-900 p-6">
+      <div className="mb-6 flex items-center justify-between">
+        <h2 className="text-xl font-semibold">
+          {format(currentDate, "MMMM yyyy")}
+        </h2>
+        <div className="flex gap-2">
+          <button
+            onClick={() =>
+              setCurrentDate(
+                new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1)
+              )
+            }
+            className="rounded-md border border-neutral-700 px-3 py-1.5 text-sm hover:bg-neutral-800"
+          >
+            ← Prev
+          </button>
+          <button
+            onClick={() => setCurrentDate(new Date())}
+            className="rounded-md border border-neutral-700 px-3 py-1.5 text-sm hover:bg-neutral-800"
+          >
+            Today
+          </button>
+          <button
+            onClick={() =>
+              setCurrentDate(
+                new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1)
+              )
+            }
+            className="rounded-md border border-neutral-700 px-3 py-1.5 text-sm hover:bg-neutral-800"
+          >
+            Next →
+          </button>
+        </div>
+      </div>
+
+      {/* Week day headers */}
+      <div className="mb-2 grid grid-cols-7 gap-1">
+        {weekDays.map((day) => (
+          <div
+            key={day}
+            className="py-2 text-center text-xs font-semibold text-neutral-400"
+          >
+            {day}
+          </div>
+        ))}
+      </div>
+
+      {/* Calendar grid */}
+      <div className="grid grid-cols-7 gap-1">
+        {/* Padding for days before month starts */}
+        {paddingDays.map((_, i) => (
+          <div key={`padding-${i}`} className="aspect-square" />
+        ))}
+
+        {/* Days of month */}
+        {daysInMonth.map((day) => {
+          const dayStr = format(day, "yyyy-MM-dd");
+          const dayBookings = bookingsByDay.get(dayStr) || [];
+          const isToday = isSameDay(day, new Date());
+
+          return (
+            <div
+              key={dayStr}
+              className={`min-h-32 rounded-lg border p-2 ${
+                isToday
+                  ? "border-emerald-600 bg-emerald-950/20"
+                  : "border-neutral-700 bg-neutral-800/40"
+              } flex flex-col`}
+            >
+              <div
+                className={`mb-1 text-xs font-semibold ${
+                  isToday ? "text-emerald-400" : "text-neutral-400"
+                }`}
+              >
+                {format(day, "d")}
+              </div>
+              <div className="flex-1 space-y-1 overflow-y-auto">
+                {dayBookings.map((booking) => (
+                  <div
+                    key={booking.id}
+                    className={`truncate rounded px-1.5 py-1 text-xs font-medium ${
+                      booking.status === "SCHEDULED"
+                        ? "bg-blue-900/40 text-blue-200"
+                        : booking.status === "WON"
+                        ? "bg-emerald-900/40 text-emerald-200"
+                        : booking.status === "LOST"
+                        ? "bg-red-900/40 text-red-200"
+                        : "bg-neutral-700/40 text-neutral-300"
+                    }`}
+                    title={`${booking.contractorName} - ${booking.setter.name}`}
+                  >
+                    {booking.contractorName.split(" ")[0]}
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Legend */}
+      <div className="mt-6 flex flex-wrap gap-4 text-xs">
+        <div className="flex items-center gap-2">
+          <div className="h-3 w-3 rounded bg-blue-900/40"></div>
+          <span className="text-neutral-400">Scheduled</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="h-3 w-3 rounded bg-emerald-900/40"></div>
+          <span className="text-neutral-400">Won</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="h-3 w-3 rounded bg-red-900/40"></div>
+          <span className="text-neutral-400">Lost</span>
+        </div>
+      </div>
+    </div>
+  );
+}

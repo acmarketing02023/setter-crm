@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 import { CallOutcome, OUTCOME_LABELS, BookingStatus, BookingSource, SOURCE_LABELS } from "@/lib/types";
 import { computeLeaderboard } from "@/lib/stats";
+import { BookingCalendar } from "./BookingCalendar";
 
 type CallRow = {
   id: string;
@@ -261,6 +262,8 @@ export function OwnerDashboard({
           {error}
         </p>
       )}
+
+      <BookingCalendar bookings={bookings} />
 
       <section className="rounded-xl border border-neutral-800 bg-neutral-900 p-6">
         <div className="mb-4 flex items-center justify-between gap-3">

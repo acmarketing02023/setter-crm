@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { notifySlack } from "@/lib/notify";
 import { CallOutcome } from "@prisma/client";
 
 export async function GET(request: Request) {
@@ -55,6 +56,13 @@ export async function POST(request: Request) {
       note: note || null,
     },
   });
+
+  // Notify Slack of the logged call (for booked outcomes)
+  if (outcome === "BOOKED") {
+    await notifySlack(
+      `:phone: Call logged by ${session.user.name}: *${contractorName}* (${phone || "no phone"}) — ${outcome}`
+    );
+  }
 
   return NextResponse.json(call, { status: 201 });
 }
