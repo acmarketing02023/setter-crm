@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 import { CallOutcome, OUTCOME_LABELS, BookingStatus, BookingSource, SOURCE_LABELS } from "@/lib/types";
@@ -46,7 +46,7 @@ type EditForm = {
 };
 
 export function OwnerDashboard({
-  stats,
+  stats: initialStats,
   calls,
   bookings,
   hasMoreCalls,
@@ -59,7 +59,28 @@ export function OwnerDashboard({
   setters: SetterOption[];
 }) {
   const router = useRouter();
+  const [stats, setStats] = useState<Stats>(initialStats);
   const [expandedId, setExpandedId] = useState<string | null>(null);
+
+  // Fetch updated stats every 30 seconds for real-time expected bookings calculation
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await fetch("/api/stats");
+        if (res.ok) {
+          const data = await res.json();
+          setStats(data.stats);
+        }
+      } catch (error) {
+        console.error("Error fetching stats:", error);
+      }
+    };
+
+    fetchStats();
+    const interval = setInterval(fetchStats, 30000); // Fetch every 30 seconds
+
+    return () => clearInterval(interval);
+  }, []);
   const [updating, setUpdating] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editForm, setEditForm] = useState<EditForm | null>(null);
