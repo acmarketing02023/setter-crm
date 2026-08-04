@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { computeCallStats } from "@/lib/stats";
-import { Header } from "@/components/Header";
+import { OwnerHeader } from "@/components/OwnerHeader";
 import { OwnerDashboard } from "@/components/OwnerDashboard";
 import type { Call, Booking, User } from "@prisma/client";
 
@@ -56,9 +56,9 @@ export default async function OwnerPage() {
   const stats = computeCallStats(calls);
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <Header name={session.user.name ?? "Owner"} role={session.user.role} />
-      <main className="mx-auto w-full max-w-4xl flex-1 px-6 py-8">
+    <div className="min-h-screen flex flex-col bg-black">
+      <OwnerHeader name={session.user.name ?? "Owner"} />
+      <main className="mx-auto w-full max-w-6xl flex-1 px-6 py-8">
         <OwnerDashboard
           stats={stats}
           calls={calls.map((c) => ({
