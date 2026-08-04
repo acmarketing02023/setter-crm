@@ -1,6 +1,6 @@
 "use client";
 
-export function OwnerHeader({ name, email }: { name: string; email?: string }) {
+export function OwnerHeader({ name, email }: { name: string; email?: string | null }) {
   const displayName = "acmarketing";
 
   return (
