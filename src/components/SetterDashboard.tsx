@@ -20,7 +20,7 @@ type BookingEditForm = {
 };
 
 export function SetterDashboard({
-  stats,
+  stats: initialStats,
   initialCalls,
   initialBookings,
   hasMoreCalls,
@@ -31,6 +31,7 @@ export function SetterDashboard({
   hasMoreCalls: boolean;
 }) {
   const router = useRouter();
+  const [stats, setStats] = useState<Stats>(initialStats);
   const [calls, setCalls] = useState<CallDTO[]>(initialCalls);
   const [hasMore, setHasMore] = useState(hasMoreCalls);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -62,6 +63,26 @@ export function SetterDashboard({
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const notepadRef = useRef<HTMLDivElement>(null);
+
+  // Fetch updated stats every 30 seconds for real-time earnings calculation
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await fetch("/api/setter/stats");
+        if (res.ok) {
+          const data = await res.json();
+          setStats(data.stats);
+        }
+      } catch (error) {
+        console.error("Error fetching stats:", error);
+      }
+    };
+
+    fetchStats();
+    const interval = setInterval(fetchStats, 30000); // Fetch every 30 seconds
+
+    return () => clearInterval(interval);
+  }, []);
 
   // Load notepad text from localStorage
   useEffect(() => {
