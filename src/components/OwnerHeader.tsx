@@ -8,7 +8,7 @@ export function OwnerHeader({ name, email }: { name: string; email?: string }) {
       <div className="mx-auto w-full max-w-6xl">
         <h1 className="text-4xl font-bold text-white">Dashboard</h1>
         <p className="mt-2 text-lg text-neutral-300">
-          Welcome back, <span className="font-semibold text-red-500">ACMARKETING_TEST</span>
+          Welcome back, <span className="font-semibold text-red-500">{displayName.toUpperCase()}</span>
         </p>
       </div>
     </div>
