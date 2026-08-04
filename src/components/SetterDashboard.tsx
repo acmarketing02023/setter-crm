@@ -414,28 +414,6 @@ export function SetterDashboard({
             </div>
           </div>
 
-          {/* Your Bookings This Month - Expected Earnings */}
-          <div className="rounded-lg bg-blue-50 border-2 border-blue-200 p-6">
-            <h3 className="font-semibold text-gray-900 mb-4">Expected Bookings This Month:</h3>
-            <div className="space-y-3">
-              <div className="flex items-baseline justify-between">
-                <span className="text-gray-700">Bookings so far:</span>
-                <span className="text-3xl font-bold text-blue-600">{stats.month.booked}</span>
-              </div>
-              <div className="flex items-baseline justify-between text-lg">
-                <span className="text-gray-700">Expected closings:</span>
-                <span className="font-bold text-gray-900">{Math.round(stats.month.booked * 0.5)} <span className="text-sm text-gray-600">({stats.month.booked} × 50%)</span></span>
-              </div>
-              <div className="border-t-2 border-blue-200 pt-3 mt-3">
-                <div className="flex items-baseline justify-between">
-                  <span className="text-lg font-semibold text-gray-900">Potential monthly earnings:</span>
-                  <span className="text-3xl font-bold text-blue-600">${(Math.round(stats.month.booked * 0.5) * 375).toLocaleString()}</span>
-                </div>
-                <p className="text-xs text-gray-600 mt-2">({Math.round(stats.month.booked * 0.5)} closings × $375 per closing)</p>
-              </div>
-            </div>
-          </div>
-
           <p className="text-sm text-gray-600 italic">💡 These are potential earnings based on average closing rate. Actual earnings depend on your bookings and their close outcomes.</p>
         </div>
       </section>
