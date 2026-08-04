@@ -252,37 +252,37 @@ export function OwnerDashboard({
   return (
     <div className="space-y-8">
       <section className="grid grid-cols-3 gap-4">
-        <div className="rounded-lg border border-red-600 bg-black p-6 hover:border-red-500">
-          <p className="text-sm font-medium text-red-400">Today</p>
-          <p className="mt-2 text-4xl font-bold text-white">{stats.today.calls}</p>
-          <p className="mt-1 text-sm text-gray-400">{stats.today.booked} booked</p>
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-md transition-shadow">
+          <p className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Today</p>
+          <p className="mt-3 text-4xl font-bold text-gray-900">{stats.today.calls}</p>
+          <p className="mt-1 text-sm text-red-600 font-medium">{stats.today.booked} booked</p>
         </div>
-        <div className="rounded-lg border border-red-600 bg-black p-6 hover:border-red-500">
-          <p className="text-sm font-medium text-red-400">This Week</p>
-          <p className="mt-2 text-4xl font-bold text-white">{stats.week.calls}</p>
-          <p className="mt-1 text-sm text-gray-400">{stats.week.booked} booked</p>
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-md transition-shadow">
+          <p className="text-sm font-semibold text-gray-600 uppercase tracking-wide">This Week</p>
+          <p className="mt-3 text-4xl font-bold text-gray-900">{stats.week.calls}</p>
+          <p className="mt-1 text-sm text-red-600 font-medium">{stats.week.booked} booked</p>
         </div>
-        <div className="rounded-lg border border-red-600 bg-black p-6 hover:border-red-500">
-          <p className="text-sm font-medium text-red-400">This Month</p>
-          <p className="mt-2 text-4xl font-bold text-white">{stats.month.calls}</p>
-          <p className="mt-1 text-sm text-gray-400">{stats.month.booked} booked</p>
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-md transition-shadow">
+          <p className="text-sm font-semibold text-gray-600 uppercase tracking-wide">This Month</p>
+          <p className="mt-3 text-4xl font-bold text-gray-900">{stats.month.calls}</p>
+          <p className="mt-1 text-sm text-red-600 font-medium">{stats.month.booked} booked</p>
         </div>
       </section>
 
       {error && (
-        <p className="rounded-md border border-red-900 bg-red-950/40 p-3 text-sm text-red-400">
+        <p className="rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700">
           {error}
         </p>
       )}
 
       <BookingCalendar bookings={bookings} />
 
-      <section className="rounded-xl border border-neutral-800 bg-neutral-900 p-6">
+      <section className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
         <div className="mb-4 flex items-center justify-between gap-3">
-          <h2 className="text-lg font-semibold">
-            Booking Calendar
+          <h2 className="text-lg font-semibold text-gray-900">
+            Upcoming Bookings
             {newCount > 0 && (
-              <span className="ml-2 rounded-full bg-emerald-600 px-2 py-0.5 text-xs font-medium text-white">
+              <span className="ml-2 rounded-full bg-red-600 px-2 py-0.5 text-xs font-medium text-white">
                 {newCount} new
               </span>
             )}
@@ -291,32 +291,32 @@ export function OwnerDashboard({
             placeholder="Search contractor…"
             value={bookingSearch}
             onChange={(e) => setBookingSearch(e.target.value)}
-            className="w-48 rounded-md border border-neutral-700 bg-neutral-950 px-3 py-1.5 text-sm outline-none focus:border-neutral-500"
+            className="w-48 rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-900 outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
           />
         </div>
 
         {Object.keys(grouped).length === 0 && (
-          <p className="text-sm text-neutral-400">No upcoming bookings.</p>
+          <p className="text-sm text-gray-500">No upcoming bookings.</p>
         )}
         <div className="space-y-5">
           {Object.entries(grouped).map(([day, items]) => (
             <div key={day}>
-              <p className="mb-2 text-sm font-medium text-neutral-300">
+              <p className="mb-2 text-sm font-semibold text-gray-700">
                 {day === todayKey ? "Today" : format(new Date(items[0].scheduledAt), "EEEE, MMM d")}
               </p>
               <ul className="space-y-2">
                 {items.map((b) => (
-                  <li key={b.id} className="rounded-lg border border-neutral-800 bg-neutral-950">
+                  <li key={b.id} className="rounded-lg border border-gray-200 bg-gray-50 hover:bg-gray-100 transition-colors">
                     <button
                       type="button"
                       onClick={() => toggleExpand(b)}
                       className="flex w-full items-center justify-between p-3 text-left"
                     >
                       <div>
-                        <p className="flex items-center gap-2 font-medium">
+                        <p className="flex items-center gap-2 font-medium text-gray-900">
                           {b.contractorName}
                           {!b.viewedAt && (
-                            <span className="rounded-full bg-emerald-600 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">
+                            <span className="rounded-full bg-red-600 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">
                               New
                             </span>
                           )}
@@ -326,19 +326,19 @@ export function OwnerDashboard({
                             </span>
                           )}
                         </p>
-                        <p className="text-xs text-neutral-500">
+                        <p className="text-xs text-gray-600">
                           Setter: {b.setter.name}
                           {b.phone ? ` · ${b.phone}` : ""}
                           {` · ${SOURCE_LABELS[b.source]}`}
                         </p>
                       </div>
-                      <span className="text-sm text-neutral-400">
+                      <span className="text-sm text-gray-600">
                         {format(new Date(b.scheduledAt), "h:mm a")}
                       </span>
                     </button>
 
                     {expandedId === b.id && (
-                      <div className="space-y-3 border-t border-neutral-800 p-3">
+                      <div className="space-y-3 border-t border-gray-200 p-3">
                         {editingId === b.id && editForm ? (
                           <div className="space-y-3">
                             <div className="grid grid-cols-2 gap-3">
@@ -348,13 +348,13 @@ export function OwnerDashboard({
                                   setEditForm({ ...editForm, contractorName: e.target.value })
                                 }
                                 placeholder="Contractor name"
-                                className="rounded-md border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm outline-none focus:border-neutral-500"
+                                className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
                               />
                               <input
                                 value={editForm.phone}
                                 onChange={(e) => setEditForm({ ...editForm, phone: e.target.value })}
                                 placeholder="Phone"
-                                className="rounded-md border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm outline-none focus:border-neutral-500"
+                                className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
                               />
                             </div>
                             <input
@@ -387,7 +387,7 @@ export function OwnerDashboard({
                               <button
                                 disabled={updating === b.id}
                                 onClick={() => saveEdit(b.id)}
-                                className="rounded-md bg-white px-3 py-1.5 text-xs font-medium text-black disabled:opacity-50"
+                                className="rounded-md bg-red-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-red-700 disabled:opacity-50"
                               >
                                 Save Changes
                               </button>
@@ -396,7 +396,7 @@ export function OwnerDashboard({
                                   setEditingId(null);
                                   setEditForm(null);
                                 }}
-                                className="rounded-md border border-neutral-700 px-3 py-1.5 text-xs text-neutral-300 hover:bg-neutral-800"
+                                className="rounded-md border border-gray-300 px-3 py-1.5 text-xs text-gray-700 hover:bg-gray-100"
                               >
                                 Cancel
                               </button>
@@ -405,26 +405,26 @@ export function OwnerDashboard({
                         ) : (
                           <>
                             <div>
-                              <p className="text-xs font-medium uppercase tracking-wide text-neutral-500">
+                              <p className="text-xs font-medium uppercase tracking-wide text-gray-600">
                                 What the setter discussed
                               </p>
-                              <p className="text-sm text-neutral-200">{b.setterNotes}</p>
+                              <p className="text-sm text-gray-800">{b.setterNotes}</p>
                             </div>
                             <div>
-                              <p className="text-xs font-medium uppercase tracking-wide text-emerald-500">
+                              <p className="text-xs font-medium uppercase tracking-wide text-red-600">
                                 What you should bring up on the call
                               </p>
-                              <p className="text-sm text-neutral-200">{b.closerBriefing}</p>
+                              <p className="text-sm text-gray-800">{b.closerBriefing}</p>
                             </div>
                             <div className="flex items-center gap-2">
-                              <label className="text-xs font-medium uppercase tracking-wide text-neutral-500">
+                              <label className="text-xs font-medium uppercase tracking-wide text-gray-600">
                                 Reassign to
                               </label>
                               <select
                                 value={b.setterId}
                                 disabled={updating === b.id}
                                 onChange={(e) => reassignSetter(b.id, e.target.value)}
-                                className="rounded-md border border-neutral-700 bg-neutral-950 px-2 py-1 text-xs outline-none focus:border-neutral-500"
+                                className="rounded-md border border-gray-300 bg-white px-2 py-1 text-xs text-gray-900 outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
                               >
                                 {setters.map((s) => (
                                   <option key={s.id} value={s.id}>
@@ -437,35 +437,35 @@ export function OwnerDashboard({
                               <button
                                 disabled={updating === b.id}
                                 onClick={() => updateStatus(b.id, "WON")}
-                                className="rounded-md bg-emerald-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-emerald-500 disabled:opacity-50"
+                                className="rounded-md bg-emerald-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-emerald-700 disabled:opacity-50"
                               >
                                 Won
                               </button>
                               <button
                                 disabled={updating === b.id}
                                 onClick={() => updateStatus(b.id, "LOST")}
-                                className="rounded-md border border-neutral-700 px-3 py-1.5 text-xs text-neutral-300 hover:bg-neutral-800 disabled:opacity-50"
+                                className="rounded-md border border-gray-300 px-3 py-1.5 text-xs text-gray-700 hover:bg-gray-100 disabled:opacity-50"
                               >
                                 Lost
                               </button>
                               <button
                                 disabled={updating === b.id}
                                 onClick={() => updateStatus(b.id, "CANCELED")}
-                                className="rounded-md border border-neutral-700 px-3 py-1.5 text-xs text-neutral-300 hover:bg-neutral-800 disabled:opacity-50"
+                                className="rounded-md border border-gray-300 px-3 py-1.5 text-xs text-gray-700 hover:bg-gray-100 disabled:opacity-50"
                               >
                                 Cancel
                               </button>
                               <button
                                 disabled={updating === b.id}
                                 onClick={() => startEdit(b)}
-                                className="rounded-md border border-neutral-700 px-3 py-1.5 text-xs text-neutral-300 hover:bg-neutral-800 disabled:opacity-50"
+                                className="rounded-md border border-gray-300 px-3 py-1.5 text-xs text-gray-700 hover:bg-gray-100 disabled:opacity-50"
                               >
                                 Edit
                               </button>
                               <button
                                 disabled={updating === b.id}
                                 onClick={() => deleteBooking(b.id)}
-                                className="rounded-md border border-red-900 px-3 py-1.5 text-xs text-red-400 hover:bg-red-950/40 disabled:opacity-50"
+                                className="rounded-md border border-red-300 px-3 py-1.5 text-xs text-red-700 hover:bg-red-50 disabled:opacity-50"
                               >
                                 Delete
                               </button>
@@ -482,14 +482,14 @@ export function OwnerDashboard({
         </div>
       </section>
 
-      <section className="rounded-xl border border-neutral-800 bg-neutral-900 p-6">
-        <h2 className="mb-4 text-lg font-semibold">Setter Leaderboard</h2>
+      <section className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+        <h2 className="mb-4 text-lg font-semibold text-gray-900">Setter Leaderboard</h2>
         {leaderboard.length === 0 ? (
-          <p className="text-sm text-neutral-400">No decided bookings yet.</p>
+          <p className="text-sm text-gray-500">No decided bookings yet.</p>
         ) : (
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-neutral-800 text-left text-xs uppercase tracking-wide text-neutral-500">
+              <tr className="border-b border-gray-200 text-left text-xs uppercase tracking-wide text-gray-600">
                 <th className="py-2 font-medium">Setter</th>
                 <th className="py-2 font-medium">Total</th>
                 <th className="py-2 font-medium">Won</th>
@@ -499,12 +499,12 @@ export function OwnerDashboard({
             </thead>
             <tbody>
               {leaderboard.map((row) => (
-                <tr key={row.setterId} className="border-b border-neutral-900">
-                  <td className="py-2">{row.setterName}</td>
-                  <td className="py-2">{row.total}</td>
-                  <td className="py-2 text-emerald-400">{row.won}</td>
-                  <td className="py-2 text-red-400">{row.lost}</td>
-                  <td className="py-2">{row.closeRate}%</td>
+                <tr key={row.setterId} className="border-b border-gray-200 hover:bg-gray-50">
+                  <td className="py-2 font-medium text-gray-900">{row.setterName}</td>
+                  <td className="py-2 text-gray-600">{row.total}</td>
+                  <td className="py-2 font-medium text-emerald-600">{row.won}</td>
+                  <td className="py-2 font-medium text-red-600">{row.lost}</td>
+                  <td className="py-2 text-gray-600">{row.closeRate}%</td>
                 </tr>
               ))}
             </tbody>
@@ -512,20 +512,20 @@ export function OwnerDashboard({
         )}
       </section>
 
-      <section className="rounded-xl border border-neutral-800 bg-neutral-900 p-6">
+      <section className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-          <h2 className="text-lg font-semibold">Recent Calls (All Setters)</h2>
+          <h2 className="text-lg font-semibold text-gray-900">Recent Calls (All Setters)</h2>
           <div className="flex flex-wrap gap-2">
             <input
               placeholder="Search contractor…"
               value={callSearch}
               onChange={(e) => setCallSearch(e.target.value)}
-              className="w-40 rounded-md border border-neutral-700 bg-neutral-950 px-3 py-1.5 text-sm outline-none focus:border-neutral-500"
+              className="w-40 rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-900 outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
             />
             <select
               value={setterFilter}
               onChange={(e) => setSetterFilter(e.target.value)}
-              className="rounded-md border border-neutral-700 bg-neutral-950 px-2 py-1.5 text-sm outline-none focus:border-neutral-500"
+              className="rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-900 outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
             >
               <option value="ALL">All setters</option>
               {setterNames.map((name) => (
@@ -537,7 +537,7 @@ export function OwnerDashboard({
             <select
               value={outcomeFilter}
               onChange={(e) => setOutcomeFilter(e.target.value as CallOutcome | "ALL")}
-              className="rounded-md border border-neutral-700 bg-neutral-950 px-2 py-1.5 text-sm outline-none focus:border-neutral-500"
+              className="rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-900 outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
             >
               <option value="ALL">All outcomes</option>
               {(Object.keys(OUTCOME_LABELS) as CallOutcome[]).map((key) => (
@@ -549,22 +549,22 @@ export function OwnerDashboard({
           </div>
         </div>
         {filteredCalls.length === 0 && (
-          <p className="text-sm text-neutral-400">No calls match your filters.</p>
+          <p className="text-sm text-gray-500">No calls match your filters.</p>
         )}
         <ul className="space-y-2">
           {filteredCalls.slice(0, 20).map((c) => (
             <li
               key={c.id}
-              className="flex items-center justify-between gap-3 rounded-md border border-neutral-800 bg-neutral-950 p-3 text-sm"
+              className="flex items-center justify-between gap-3 rounded-md border border-gray-200 bg-gray-50 hover:bg-gray-100 p-3 text-sm transition-colors"
             >
-              <span className="flex-1">{c.contractorName}</span>
-              <span className="text-neutral-500">{c.setterName}</span>
-              <span className="text-neutral-400">{OUTCOME_LABELS[c.outcome]}</span>
-              <span className="text-neutral-500">{format(new Date(c.createdAt), "MMM d, h:mm a")}</span>
+              <span className="flex-1 font-medium text-gray-900">{c.contractorName}</span>
+              <span className="text-gray-600">{c.setterName}</span>
+              <span className="text-gray-600">{OUTCOME_LABELS[c.outcome]}</span>
+              <span className="text-gray-600">{format(new Date(c.createdAt), "MMM d, h:mm a")}</span>
               <button
                 disabled={updating === c.id}
                 onClick={() => deleteCall(c.id)}
-                className="rounded-md border border-red-900 px-2 py-1 text-xs text-red-400 hover:bg-red-950/40 disabled:opacity-50"
+                className="rounded-md border border-red-300 px-2 py-1 text-xs text-red-700 hover:bg-red-50 disabled:opacity-50"
               >
                 Delete
               </button>

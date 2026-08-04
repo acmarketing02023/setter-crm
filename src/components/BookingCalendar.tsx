@@ -34,9 +34,9 @@ export function BookingCalendar({ bookings }: { bookings: Booking[] }) {
   const paddingDays = Array(firstDayOfWeek).fill(null);
 
   return (
-    <div className="rounded-lg border border-neutral-700 bg-neutral-900 p-6">
+    <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
       <div className="mb-6 flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-white">
+        <h2 className="text-2xl font-bold text-gray-900">
           {format(currentDate, "MMMM yyyy")}
         </h2>
         <div className="flex gap-2">
@@ -46,13 +46,13 @@ export function BookingCalendar({ bookings }: { bookings: Booking[] }) {
                 new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1)
               )
             }
-            className="rounded-md border border-neutral-700 px-3 py-1.5 text-sm hover:bg-neutral-800"
+            className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100"
           >
             ← Prev
           </button>
           <button
             onClick={() => setCurrentDate(new Date())}
-            className="rounded-md border border-neutral-700 px-3 py-1.5 text-sm hover:bg-neutral-800"
+            className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100"
           >
             Today
           </button>
@@ -62,7 +62,7 @@ export function BookingCalendar({ bookings }: { bookings: Booking[] }) {
                 new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1)
               )
             }
-            className="rounded-md border border-neutral-700 px-3 py-1.5 text-sm hover:bg-neutral-800"
+            className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100"
           >
             Next →
           </button>
@@ -74,7 +74,7 @@ export function BookingCalendar({ bookings }: { bookings: Booking[] }) {
         {weekDays.map((day) => (
           <div
             key={day}
-            className="py-2 text-center text-xs font-semibold text-neutral-400"
+            className="py-2 text-center text-xs font-semibold text-gray-600"
           >
             {day}
           </div>
@@ -99,13 +99,13 @@ export function BookingCalendar({ bookings }: { bookings: Booking[] }) {
               key={dayStr}
               className={`min-h-40 rounded-lg border p-2 ${
                 isToday
-                  ? "border-red-600 bg-red-950/20"
-                  : "border-neutral-700 bg-neutral-800/40"
+                  ? "border-red-500 bg-red-50"
+                  : "border-gray-200 bg-gray-50"
               } flex flex-col`}
             >
               <div
                 className={`mb-1 text-xs font-semibold ${
-                  isToday ? "text-red-500" : "text-neutral-400"
+                  isToday ? "text-red-600" : "text-gray-600"
                 }`}
               >
                 {format(day, "d")}
@@ -116,12 +116,12 @@ export function BookingCalendar({ bookings }: { bookings: Booking[] }) {
                     key={booking.id}
                     className={`rounded px-2 py-1.5 text-xs space-y-0.5 ${
                       booking.status === "SCHEDULED"
-                        ? "bg-blue-900/40 text-blue-200"
+                        ? "bg-blue-100 text-blue-900"
                         : booking.status === "WON"
-                        ? "bg-emerald-900/40 text-emerald-200"
+                        ? "bg-emerald-100 text-emerald-900"
                         : booking.status === "LOST"
-                        ? "bg-red-900/40 text-red-200"
-                        : "bg-neutral-700/40 text-neutral-300"
+                        ? "bg-red-100 text-red-900"
+                        : "bg-gray-200 text-gray-900"
                     }`}
                     title={`${booking.contractorName} - ${booking.setter.name} - ${booking.phone || "no phone"}`}
                   >
@@ -147,16 +147,16 @@ export function BookingCalendar({ bookings }: { bookings: Booking[] }) {
       {/* Legend */}
       <div className="mt-6 flex flex-wrap gap-6 text-sm">
         <div className="flex items-center gap-2">
-          <div className="h-3 w-3 rounded bg-blue-600"></div>
-          <span className="text-neutral-300">Scheduled</span>
+          <div className="h-3 w-3 rounded bg-blue-500"></div>
+          <span className="text-gray-700">Scheduled</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="h-3 w-3 rounded bg-red-600"></div>
-          <span className="text-neutral-300">Won</span>
+          <div className="h-3 w-3 rounded bg-emerald-500"></div>
+          <span className="text-gray-700">Won</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="h-3 w-3 rounded bg-neutral-500"></div>
-          <span className="text-neutral-300">Lost</span>
+          <div className="h-3 w-3 rounded bg-red-500"></div>
+          <span className="text-gray-700">Lost</span>
         </div>
       </div>
     </div>
