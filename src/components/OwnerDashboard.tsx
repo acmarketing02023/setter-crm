@@ -6,8 +6,6 @@ import { format } from "date-fns";
 import { CallOutcome, OUTCOME_LABELS, BookingStatus, BookingSource, SOURCE_LABELS } from "@/lib/types";
 import { computeLeaderboard } from "@/lib/stats";
 import { BookingCalendar } from "./BookingCalendar";
-import { StatCardPro } from "./StatCardPro";
-import { SetterLeaderboard } from "./SetterLeaderboard";
 
 type CallRow = {
   id: string;
@@ -252,29 +250,23 @@ export function OwnerDashboard({
   });
 
   return (
-    <div className="space-y-8 bg-black min-h-screen">
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <StatCardPro
-          label="Today"
-          value={stats.today.calls}
-          subtext={`${stats.today.booked} booked`}
-          icon="📞"
-          trend={stats.today.booked > 0 ? "up" : "neutral"}
-        />
-        <StatCardPro
-          label="This Week"
-          value={stats.week.calls}
-          subtext={`${stats.week.booked} booked`}
-          icon="📊"
-          trend={stats.week.booked > 0 ? "up" : "neutral"}
-        />
-        <StatCardPro
-          label="This Month"
-          value={stats.month.calls}
-          subtext={`${stats.month.booked} booked`}
-          icon="📈"
-          trend={stats.month.booked > 0 ? "up" : "neutral"}
-        />
+    <div className="space-y-8">
+      <section className="grid grid-cols-3 gap-4">
+        <div className="rounded-lg border border-red-600 bg-black p-6 hover:border-red-500">
+          <p className="text-sm font-medium text-red-400">Today</p>
+          <p className="mt-2 text-4xl font-bold text-white">{stats.today.calls}</p>
+          <p className="mt-1 text-sm text-gray-400">{stats.today.booked} booked</p>
+        </div>
+        <div className="rounded-lg border border-red-600 bg-black p-6 hover:border-red-500">
+          <p className="text-sm font-medium text-red-400">This Week</p>
+          <p className="mt-2 text-4xl font-bold text-white">{stats.week.calls}</p>
+          <p className="mt-1 text-sm text-gray-400">{stats.week.booked} booked</p>
+        </div>
+        <div className="rounded-lg border border-red-600 bg-black p-6 hover:border-red-500">
+          <p className="text-sm font-medium text-red-400">This Month</p>
+          <p className="mt-2 text-4xl font-bold text-white">{stats.month.calls}</p>
+          <p className="mt-1 text-sm text-gray-400">{stats.month.booked} booked</p>
+        </div>
       </section>
 
       {error && (
@@ -284,8 +276,6 @@ export function OwnerDashboard({
       )}
 
       <BookingCalendar bookings={bookings} />
-
-      <SetterLeaderboard entries={leaderboard} />
 
       <section className="rounded-xl border border-neutral-800 bg-neutral-900 p-6">
         <div className="mb-4 flex items-center justify-between gap-3">
