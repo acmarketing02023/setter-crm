@@ -1,7 +1,7 @@
 "use client";
 
 export function OwnerHeader({ name, email }: { name: string; email?: string }) {
-  const displayName = email ? email.split("@")[0] : "acmarketing";
+  const displayName = "acmarketing";
 
   return (
     <div className="border-b border-neutral-800 bg-black px-6 py-8">
