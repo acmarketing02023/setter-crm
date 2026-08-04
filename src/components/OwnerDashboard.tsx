@@ -251,52 +251,97 @@ export function OwnerDashboard({
 
   return (
     <div className="space-y-8">
-      <section className="grid grid-cols-3 gap-4">
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-md transition-shadow">
-          <p className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Today</p>
-          <p className="mt-3 text-4xl font-bold text-gray-900">{stats.today.calls}</p>
-          <p className="mt-1 text-sm text-red-600 font-medium">{stats.today.booked} booked</p>
+      <section className="grid grid-cols-3 gap-6">
+        <div className="group rounded-2xl border border-gray-200 bg-white p-8 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest">Today's Calls</p>
+              <p className="mt-4 text-5xl font-bold text-gray-900">{stats.today.calls}</p>
+              <p className="mt-3 text-sm text-red-600 font-semibold">{stats.today.booked} booked</p>
+            </div>
+            <div className="h-16 w-16 rounded-full bg-gradient-to-br from-red-50 to-red-100 flex items-center justify-center group-hover:from-red-100 group-hover:to-red-200 transition-colors">
+              <svg className="w-8 h-8 text-red-600" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M3 5a2 2 0 012-2h3.28a1 1 0 00.948-.684l1.498-4.493a1 1 0 011.502-.684l1.498 4.493a1 1 0 00.948.684H19a2 2 0 012 2v2a1 1 0 01-1 1H4a1 1 0 01-1-1V5z M3 15a2 2 0 012-2h3.28a1 1 0 00.948-.684l1.498-4.493a1 1 0 011.502-.684l1.498 4.493a1 1 0 00.948.684H19a2 2 0 012 2v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2z" />
+              </svg>
+            </div>
+          </div>
         </div>
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-md transition-shadow">
-          <p className="text-sm font-semibold text-gray-600 uppercase tracking-wide">This Week</p>
-          <p className="mt-3 text-4xl font-bold text-gray-900">{stats.week.calls}</p>
-          <p className="mt-1 text-sm text-red-600 font-medium">{stats.week.booked} booked</p>
+
+        <div className="group rounded-2xl border border-gray-200 bg-white p-8 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest">This Week</p>
+              <p className="mt-4 text-5xl font-bold text-gray-900">{stats.week.calls}</p>
+              <p className="mt-3 text-sm text-emerald-600 font-semibold">{stats.week.booked} booked</p>
+            </div>
+            <div className="h-16 w-16 rounded-full bg-gradient-to-br from-emerald-50 to-emerald-100 flex items-center justify-center group-hover:from-emerald-100 group-hover:to-emerald-200 transition-colors">
+              <svg className="w-8 h-8 text-emerald-600" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z" />
+              </svg>
+            </div>
+          </div>
         </div>
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-md transition-shadow">
-          <p className="text-sm font-semibold text-gray-600 uppercase tracking-wide">This Month</p>
-          <p className="mt-3 text-4xl font-bold text-gray-900">{stats.month.calls}</p>
-          <p className="mt-1 text-sm text-red-600 font-medium">{stats.month.booked} booked</p>
+
+        <div className="group rounded-2xl border border-gray-200 bg-white p-8 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest">This Month</p>
+              <p className="mt-4 text-5xl font-bold text-gray-900">{stats.month.calls}</p>
+              <p className="mt-3 text-sm text-blue-600 font-semibold">{stats.month.booked} booked</p>
+            </div>
+            <div className="h-16 w-16 rounded-full bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center group-hover:from-blue-100 group-hover:to-blue-200 transition-colors">
+              <svg className="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+              </svg>
+            </div>
+          </div>
         </div>
       </section>
 
       {error && (
-        <p className="rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+        <div className="rounded-xl border border-red-200 bg-red-50 p-4 flex items-center gap-3 text-sm text-red-700">
+          <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+          </svg>
           {error}
-        </p>
+        </div>
       )}
 
       <BookingCalendar bookings={bookings} />
 
-      <section className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-        <div className="mb-4 flex items-center justify-between gap-3">
-          <h2 className="text-lg font-semibold text-gray-900">
-            Upcoming Bookings
-            {newCount > 0 && (
-              <span className="ml-2 rounded-full bg-red-600 px-2 py-0.5 text-xs font-medium text-white">
-                {newCount} new
-              </span>
-            )}
-          </h2>
+      <section className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
+        <div className="mb-6 flex items-center justify-between gap-3">
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-3">
+              <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
+                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zm-6-7h-2v5h2zm0-9h-2v2h2z" />
+                </svg>
+              </div>
+              Upcoming Bookings
+              {newCount > 0 && (
+                <span className="ml-auto rounded-full bg-red-600 px-3 py-1 text-xs font-bold text-white">
+                  {newCount} new
+                </span>
+              )}
+            </h2>
+          </div>
           <input
             placeholder="Search contractor…"
             value={bookingSearch}
             onChange={(e) => setBookingSearch(e.target.value)}
-            className="w-48 rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-900 outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+            className="w-56 rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 text-sm text-gray-900 outline-none focus:bg-white focus:border-red-500 focus:ring-2 focus:ring-red-100"
           />
         </div>
 
         {Object.keys(grouped).length === 0 && (
-          <p className="text-sm text-gray-500">No upcoming bookings.</p>
+          <div className="rounded-lg border border-dashed border-gray-300 bg-gray-50 p-8 text-center">
+            <svg className="w-12 h-12 text-gray-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            <p className="text-gray-600 font-medium">No upcoming bookings</p>
+            <p className="text-sm text-gray-500 mt-1">Bookings will appear here once they're scheduled</p>
+          </div>
         )}
         <div className="space-y-5">
           {Object.entries(grouped).map(([day, items]) => (
@@ -387,7 +432,7 @@ export function OwnerDashboard({
                               <button
                                 disabled={updating === b.id}
                                 onClick={() => saveEdit(b.id)}
-                                className="rounded-md bg-red-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-red-700 disabled:opacity-50"
+                                className="rounded-lg bg-red-600 px-4 py-2 text-xs font-semibold text-white hover:bg-red-700 hover:shadow-md transition-all disabled:opacity-50"
                               >
                                 Save Changes
                               </button>
@@ -396,7 +441,7 @@ export function OwnerDashboard({
                                   setEditingId(null);
                                   setEditForm(null);
                                 }}
-                                className="rounded-md border border-gray-300 px-3 py-1.5 text-xs text-gray-700 hover:bg-gray-100"
+                                className="rounded-lg border border-gray-300 px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-100 transition-colors"
                               >
                                 Cancel
                               </button>
@@ -433,41 +478,41 @@ export function OwnerDashboard({
                                 ))}
                               </select>
                             </div>
-                            <div className="flex flex-wrap gap-2 pt-1">
+                            <div className="flex flex-wrap gap-3 pt-2">
                               <button
                                 disabled={updating === b.id}
                                 onClick={() => updateStatus(b.id, "WON")}
-                                className="rounded-md bg-emerald-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-emerald-700 disabled:opacity-50"
+                                className="rounded-lg bg-emerald-600 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-700 hover:shadow-md transition-all disabled:opacity-50"
                               >
-                                Won
+                                ✓ Won
                               </button>
                               <button
                                 disabled={updating === b.id}
                                 onClick={() => updateStatus(b.id, "LOST")}
-                                className="rounded-md border border-gray-300 px-3 py-1.5 text-xs text-gray-700 hover:bg-gray-100 disabled:opacity-50"
+                                className="rounded-lg border border-gray-300 px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-100 transition-colors disabled:opacity-50"
                               >
                                 Lost
                               </button>
                               <button
                                 disabled={updating === b.id}
                                 onClick={() => updateStatus(b.id, "CANCELED")}
-                                className="rounded-md border border-gray-300 px-3 py-1.5 text-xs text-gray-700 hover:bg-gray-100 disabled:opacity-50"
+                                className="rounded-lg border border-gray-300 px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-100 transition-colors disabled:opacity-50"
                               >
-                                Cancel
+                                ✕ Cancel
                               </button>
                               <button
                                 disabled={updating === b.id}
                                 onClick={() => startEdit(b)}
-                                className="rounded-md border border-gray-300 px-3 py-1.5 text-xs text-gray-700 hover:bg-gray-100 disabled:opacity-50"
+                                className="rounded-lg border border-gray-300 px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-100 transition-colors disabled:opacity-50"
                               >
-                                Edit
+                                ✎ Edit
                               </button>
                               <button
                                 disabled={updating === b.id}
                                 onClick={() => deleteBooking(b.id)}
-                                className="rounded-md border border-red-300 px-3 py-1.5 text-xs text-red-700 hover:bg-red-50 disabled:opacity-50"
+                                className="rounded-lg border border-red-300 px-4 py-2 text-xs font-semibold text-red-700 hover:bg-red-50 transition-colors disabled:opacity-50"
                               >
-                                Delete
+                                🗑 Delete
                               </button>
                             </div>
                           </>
@@ -482,10 +527,23 @@ export function OwnerDashboard({
         </div>
       </section>
 
-      <section className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-        <h2 className="mb-4 text-lg font-semibold text-gray-900">Setter Leaderboard</h2>
+      <section className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
+        <h2 className="mb-6 text-2xl font-bold text-gray-900 flex items-center gap-3">
+          <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center">
+            <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M9 21H7v-5H4v5H2v-7h7v7zm8 0h-2v-5h-3v5h-2v-7h7v7zm4-10V9h-2V7h2V5h2v2h2v2h-2v2h-2z" />
+            </svg>
+          </div>
+          Setter Leaderboard
+        </h2>
         {leaderboard.length === 0 ? (
-          <p className="text-sm text-gray-500">No decided bookings yet.</p>
+          <div className="rounded-lg border border-dashed border-gray-300 bg-gray-50 p-8 text-center">
+            <svg className="w-12 h-12 text-gray-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
+            <p className="text-gray-600 font-medium">No leaderboard data yet</p>
+            <p className="text-sm text-gray-500 mt-1">Leaderboard will update as bookings are won or lost</p>
+          </div>
         ) : (
           <table className="w-full text-sm">
             <thead>
@@ -512,20 +570,27 @@ export function OwnerDashboard({
         )}
       </section>
 
-      <section className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-        <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-          <h2 className="text-lg font-semibold text-gray-900">Recent Calls (All Setters)</h2>
-          <div className="flex flex-wrap gap-2">
+      <section className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+          <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-3">
+            <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center">
+              <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z" />
+              </svg>
+            </div>
+            Recent Calls (All Setters)
+          </h2>
+          <div className="flex flex-wrap gap-3">
             <input
               placeholder="Search contractor…"
               value={callSearch}
               onChange={(e) => setCallSearch(e.target.value)}
-              className="w-40 rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-900 outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+              className="w-40 rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 text-sm text-gray-900 outline-none focus:bg-white focus:border-red-500 focus:ring-2 focus:ring-red-100"
             />
             <select
               value={setterFilter}
               onChange={(e) => setSetterFilter(e.target.value)}
-              className="rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-900 outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+              className="rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 text-sm text-gray-900 outline-none focus:bg-white focus:border-red-500 focus:ring-2 focus:ring-red-100"
             >
               <option value="ALL">All setters</option>
               {setterNames.map((name) => (
@@ -537,7 +602,7 @@ export function OwnerDashboard({
             <select
               value={outcomeFilter}
               onChange={(e) => setOutcomeFilter(e.target.value as CallOutcome | "ALL")}
-              className="rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-900 outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+              className="rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 text-sm text-gray-900 outline-none focus:bg-white focus:border-red-500 focus:ring-2 focus:ring-red-100"
             >
               <option value="ALL">All outcomes</option>
               {(Object.keys(OUTCOME_LABELS) as CallOutcome[]).map((key) => (
@@ -549,22 +614,30 @@ export function OwnerDashboard({
           </div>
         </div>
         {filteredCalls.length === 0 && (
-          <p className="text-sm text-gray-500">No calls match your filters.</p>
+          <div className="rounded-lg border border-dashed border-gray-300 bg-gray-50 p-8 text-center">
+            <svg className="w-12 h-12 text-gray-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 00.948-.684l1.498-4.493a1 1 0 011.502-.684l1.498 4.493a1 1 0 00.948.684H19a2 2 0 012 2v2a1 1 0 01-1 1H4a1 1 0 01-1-1V5z" />
+            </svg>
+            <p className="text-gray-600 font-medium">No calls match your filters</p>
+            <p className="text-sm text-gray-500 mt-1">Try adjusting your search or filter criteria</p>
+          </div>
         )}
-        <ul className="space-y-2">
+        <ul className="space-y-3">
           {filteredCalls.slice(0, 20).map((c) => (
             <li
               key={c.id}
-              className="flex items-center justify-between gap-3 rounded-md border border-gray-200 bg-gray-50 hover:bg-gray-100 p-3 text-sm transition-colors"
+              className="flex items-center justify-between gap-4 rounded-lg border border-gray-200 bg-gray-50 hover:bg-gray-100 p-4 text-sm transition-colors group"
             >
-              <span className="flex-1 font-medium text-gray-900">{c.contractorName}</span>
-              <span className="text-gray-600">{c.setterName}</span>
-              <span className="text-gray-600">{OUTCOME_LABELS[c.outcome]}</span>
-              <span className="text-gray-600">{format(new Date(c.createdAt), "MMM d, h:mm a")}</span>
+              <span className="flex-1 font-semibold text-gray-900">{c.contractorName}</span>
+              <div className="flex items-center gap-4 text-gray-600">
+                <span className="text-xs">{c.setterName}</span>
+                <span className="px-2 py-1 rounded-full text-xs font-medium bg-white border border-gray-300">{OUTCOME_LABELS[c.outcome]}</span>
+                <span className="text-xs whitespace-nowrap">{format(new Date(c.createdAt), "MMM d, h:mm a")}</span>
+              </div>
               <button
                 disabled={updating === c.id}
                 onClick={() => deleteCall(c.id)}
-                className="rounded-md border border-red-300 px-2 py-1 text-xs text-red-700 hover:bg-red-50 disabled:opacity-50"
+                className="rounded-lg border border-red-300 px-3 py-1.5 text-xs font-semibold text-red-700 hover:bg-red-50 hover:border-red-400 transition-colors disabled:opacity-50 opacity-0 group-hover:opacity-100"
               >
                 Delete
               </button>

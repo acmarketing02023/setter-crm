@@ -34,9 +34,14 @@ export function BookingCalendar({ bookings }: { bookings: Booking[] }) {
   const paddingDays = Array(firstDayOfWeek).fill(null);
 
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+    <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
       <div className="mb-6 flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-gray-900">
+        <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-3">
+          <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
+            <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z" />
+            </svg>
+          </div>
           {format(currentDate, "MMMM yyyy")}
         </h2>
         <div className="flex gap-2">
@@ -46,13 +51,13 @@ export function BookingCalendar({ bookings }: { bookings: Booking[] }) {
                 new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1)
               )
             }
-            className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100"
+            className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 hover:border-gray-400 transition-colors"
           >
             ← Prev
           </button>
           <button
             onClick={() => setCurrentDate(new Date())}
-            className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100"
+            className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700 transition-colors"
           >
             Today
           </button>
@@ -62,7 +67,7 @@ export function BookingCalendar({ bookings }: { bookings: Booking[] }) {
                 new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1)
               )
             }
-            className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100"
+            className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 hover:border-gray-400 transition-colors"
           >
             Next →
           </button>
