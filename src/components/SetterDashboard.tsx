@@ -393,9 +393,9 @@ export function SetterDashboard({
             </div>
           </div>
 
-          {/* Your Bookings This Month */}
+          {/* Your Bookings This Month - Expected Earnings */}
           <div className="rounded-lg bg-blue-50 border-2 border-blue-200 p-6">
-            <h3 className="font-semibold text-gray-900 mb-4">This Month's Forecast:</h3>
+            <h3 className="font-semibold text-gray-900 mb-4">Expected Bookings This Month:</h3>
             <div className="space-y-3">
               <div className="flex items-baseline justify-between">
                 <span className="text-gray-700">Bookings so far:</span>
