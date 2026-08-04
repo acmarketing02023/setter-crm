@@ -57,7 +57,7 @@ export default async function OwnerPage() {
   const stats = computeCallStats(calls);
 
   return (
-    <div className="min-h-screen flex flex-col bg-black">
+    <div className="min-h-screen flex flex-col bg-red-950">
       <OwnerHeader name={session.user.name ?? "Owner"} email={session.user.email} />
       <main className="mx-auto w-full max-w-6xl flex-1 px-6 py-8">
         <OwnerDashboard
