@@ -497,7 +497,10 @@ export function SetterDashboard({
 
       <section className="rounded-xl border border-neutral-800 bg-neutral-900 p-6">
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-          <h2 className="text-lg font-semibold">Recent Calls</h2>
+          <div>
+            <h2 className="text-lg font-semibold">Recent Calls</h2>
+            <p className="text-xs text-neutral-400 mt-1">{calls.length} total calls logged</p>
+          </div>
           <div className="flex flex-wrap gap-2">
             <input
               placeholder="Search contractor…"
@@ -523,7 +526,7 @@ export function SetterDashboard({
           <p className="text-sm text-neutral-400">No calls match your filters.</p>
         )}
         <ul className="space-y-2">
-          {filteredCalls.slice(0, 15).map((c) => (
+          {filteredCalls.map((c) => (
             <li
               key={c.id}
               className="rounded-md border border-neutral-800 bg-neutral-950 p-3 text-sm"

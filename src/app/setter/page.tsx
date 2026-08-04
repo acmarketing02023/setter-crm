@@ -16,6 +16,7 @@ export default async function SetterPage() {
     prisma.call.findMany({
       where: { setterId: session.user.id },
       orderBy: { createdAt: "desc" },
+      include: { booking: true },
       take: CALLS_PAGE_SIZE + 1,
     }),
     prisma.booking.findMany({
