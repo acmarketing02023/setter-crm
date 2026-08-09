@@ -8,7 +8,7 @@ export function Header({ name, role }: { name: string; role: string }) {
       <div>
         <p className="font-semibold text-white">Setter CRM</p>
         <p className="text-xs text-neutral-400">
-          {name} · {role === "OWNER" ? "Owner" : "Setter"}
+          {name} {role === "SETTER" ? "(Setter)" : "(Owner)"}
         </p>
       </div>
       <button
