@@ -81,9 +81,10 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-neutral-950 px-4">
-      <div className="w-full max-w-sm space-y-4 rounded-xl border border-neutral-800 bg-neutral-900 p-8">
-        <div>
-          <h1 className="text-xl font-semibold text-white">Setter CRM</h1>
+      <div className="w-full max-w-sm space-y-8 rounded-xl border border-neutral-800 bg-neutral-900 p-8">
+        <div className="text-center space-y-4">
+          <h1 className="text-4xl font-black text-white uppercase tracking-wider">Welcome ACMARKETING Team</h1>
+          <p className="text-2xl font-semibold text-white">Setter CRM</p>
           <p className="text-sm text-neutral-400">Choose your role to continue</p>
         </div>
 
@@ -97,7 +98,7 @@ export default function LoginPage() {
           <button
             onClick={() => handleLogin("angelcruzgabriel44@gmail.com", "15598654Aa", "Angel Cruz")}
             disabled={loading !== null || initializing}
-            className="w-full rounded-md bg-blue-600 py-3 font-medium text-white hover:bg-blue-700 disabled:opacity-50 transition"
+            className="w-full rounded-md bg-white py-3 font-medium text-black hover:bg-gray-200 disabled:opacity-50 transition"
           >
             {loading === "setter" ? "Signing in..." : "Login Angel Cruz (Setter)"}
           </button>
@@ -105,7 +106,7 @@ export default function LoginPage() {
           <button
             onClick={() => handleLogin("alanortiz44@gmail.com", "26749531Bo", "Alan Ortiz")}
             disabled={loading !== null || initializing}
-            className="w-full rounded-md bg-blue-600 py-3 font-medium text-white hover:bg-blue-700 disabled:opacity-50 transition"
+            className="w-full rounded-md bg-white py-3 font-medium text-black hover:bg-gray-200 disabled:opacity-50 transition"
           >
             {loading === "setter" ? "Signing in..." : "Login Alan Ortiz (Setter)"}
           </button>
@@ -114,7 +115,7 @@ export default function LoginPage() {
         <button
           onClick={() => handleOwnerLogin("acmarketing02023@gmail.com", "64186418Am")}
           disabled={loading !== null || initializing}
-          className="w-full rounded-md bg-purple-600 py-3 font-medium text-white hover:bg-purple-700 disabled:opacity-50 transition"
+          className="w-full rounded-md bg-black py-3 font-medium text-white hover:bg-gray-900 border border-white disabled:opacity-50 transition"
         >
           {loading === "owner" ? "Signing in..." : "Login as Owner"}
         </button>
