@@ -90,7 +90,7 @@ export default function LoginPage() {
           disabled={loading !== null || initializing}
           className="w-full rounded-md bg-blue-600 py-3 font-medium text-white hover:bg-blue-700 disabled:opacity-50 transition"
         >
-          {loading === "setter" ? "Signing in..." : "Login as Setter"}
+          {loading === "setter" ? "Signing in..." : "Login Angel Cruz (Setter)"}
         </button>
 
         <button
