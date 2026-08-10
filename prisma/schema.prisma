@@ -47,8 +47,8 @@ model User {
 
 model Call {
   id              String      @id @default(cuid())
-  setter          User        @relation(fields: [setterId], references: [id])
-  setterId        String?
+  setter          User?       @relation(fields: [setterId], references: [id])
+setterId        String?
   contractorName  String
   phone           String?
   outcome         CallOutcome
