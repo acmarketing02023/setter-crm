@@ -26,7 +26,7 @@ export function OwnerHeader({ name, email }: { name: string; email?: string | nu
 
         <button
           onClick={() => signOut({ callbackUrl: "/login" })}
-          className="rounded-lg border border-red-600 bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700 transition-colors"
+          className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700 transition-colors shadow-md"
         >
           Sign Out
         </button>
