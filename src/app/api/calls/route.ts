@@ -31,16 +31,14 @@ export async function POST(request: Request) {
     }
 
     // Create call without a setter (marked as from scraper)
-    const call = await prisma.call.create({
-      data: {
-        contractorName,
-        phone: phone || null,
-        outcome,
-        note: note || `[Auto-logged from scraper]`,
-       setterId: "system", // System user for scraper calls
-      },
-    });
-
+   const call = await prisma.call.create({
+  data: {
+    contractorName,
+    phone: phone || null,
+    outcome,
+    note: note || `[Auto-logged from scraper]`,
+  },
+});
     return NextResponse.json(call, { status: 201 });
   }
 
