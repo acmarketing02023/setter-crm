@@ -36,7 +36,7 @@ export default async function SetterPage() {
       <main className="mx-auto w-full max-w-4xl flex-1 px-6 py-8">
         <SetterDashboard
           stats={stats}
-          initialCalls={calls.map((c) => ({ ...c, createdAt: c.createdAt.toISOString() }))}
+          initialCalls={calls.map((c) => ({ ...c, setterId: c.setterId!, createdAt: c.createdAt.toISOString() }))}
           hasMoreCalls={hasMoreCalls}
           initialBookings={bookings.map((b) => ({
             ...b,
