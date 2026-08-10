@@ -65,7 +65,7 @@ export default async function OwnerPage() {
           calls={calls.map((c) => ({
             ...c,
             createdAt: c.createdAt.toISOString(),
-            setterName: c.setter.name,
+            setterName: c.setter?.name || "System",
           }))}
           hasMoreCalls={hasMoreCalls}
           bookings={bookings.map((b) => ({
