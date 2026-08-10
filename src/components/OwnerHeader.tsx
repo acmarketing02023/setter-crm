@@ -1,11 +1,13 @@
 "use client";
 
+import { signOut } from "next-auth/react";
+
 export function OwnerHeader({ name, email }: { name: string; email?: string | null }) {
   const displayName = "acmarketing";
 
   return (
     <div className="border-b border-gray-200 bg-white px-6 py-6 shadow-sm">
-      <div className="mx-auto w-full max-w-6xl">
+      <div className="mx-auto w-full max-w-6xl flex items-center justify-between">
         <div className="flex items-center gap-4">
           {/* AC Marketing Logo */}
           <div className="h-14 w-14 rounded-lg bg-black flex items-center justify-center flex-shrink-0 shadow-md border-2 border-red-600">
@@ -21,6 +23,13 @@ export function OwnerHeader({ name, email }: { name: string; email?: string | nu
             </p>
           </div>
         </div>
+
+        <button
+          onClick={() => signOut({ callbackUrl: "/login" })}
+          className="rounded-lg border border-red-600 bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700 transition-colors"
+        >
+          Sign Out
+        </button>
       </div>
     </div>
   );
