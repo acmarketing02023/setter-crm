@@ -15,7 +15,7 @@ export default async function OwnerPage() {
   const CALLS_PAGE_SIZE = 50;
 
   // Fetch data sequentially to isolate any errors
-  let callsPage: (Call & { setter: { name: string } })[] = [];
+  let callsPage: (Call & { setter: { name: string } | null })[] = [];
   let bookings: (Booking & { setter: { name: string } })[] = [];
   let setters: { id: string; name: string }[] = [];
 
