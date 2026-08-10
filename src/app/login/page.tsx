@@ -83,7 +83,7 @@ export default function LoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-neutral-950 px-4">
       <div className="w-full max-w-sm space-y-8 rounded-xl border border-neutral-800 bg-neutral-900 p-8">
         <div className="text-center space-y-4">
-          <h1 className="text-4xl font-black text-white uppercase tracking-wider">Welcome ACMARKETING Team</h1>
+          <h1 className="text-4xl font-black text-white uppercase tracking-wider">WELCOME ACMARKETING TEAM</h1>
           <p className="text-2xl font-semibold text-white">Setter CRM</p>
           <p className="text-sm text-neutral-400">Choose your role to continue</p>
         </div>
