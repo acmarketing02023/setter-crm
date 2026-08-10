@@ -16,7 +16,8 @@ export async function POST() {
 
     // Hash passwords
     const ownerPasswordHash = await bcrypt.hash("64186418Am", 10);
-    const setterPasswordHash = await bcrypt.hash("15598654Aa", 10);
+    const angelPasswordHash = await bcrypt.hash("15598654Aa", 10);
+    const alanPasswordHash = await bcrypt.hash("26749531Bo", 10);
 
     // Create users
     const result = await prisma.user.createMany({
@@ -28,9 +29,15 @@ export async function POST() {
           role: Role.OWNER,
         },
         {
-          name: "Setter",
+          name: "Angel Cruz",
           email: "angelcruzgabriel44@gmail.com",
-          passwordHash: setterPasswordHash,
+          passwordHash: angelPasswordHash,
+          role: Role.SETTER,
+        },
+        {
+          name: "Alan Ortiz",
+          email: "alanortiz44@gmail.com",
+          passwordHash: alanPasswordHash,
           role: Role.SETTER,
         },
       ],

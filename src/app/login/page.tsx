@@ -35,39 +35,47 @@ export default function LoginPage() {
     init();
   }, []);
 
-  async function handleLogin(role: "setter" | "owner") {
-    setLoading(role);
+  async function handleLogin(email: string, password: string, name: string) {
+    setLoading("setter");
     setError(null);
 
-    const credentials = {
-      setter: {
-        email: "angelcruzgabriel44@gmail.com",
-        password: "15598654Aa",
-      },
-      owner: {
-        email: "acmarketing02023@gmail.com",
-        password: "64186418Am",
-      },
-    };
-
-    const creds = credentials[role];
-
     const res = await signIn("credentials", {
-      email: creds.email,
-      password: creds.password,
+      email,
+      password,
       redirect: false,
     });
 
     setLoading(null);
 
     if (res?.error) {
-      setError(`Failed to sign in as ${role}. Please check database connection.`);
+      setError(`Failed to sign in as ${name}. Please check database connection.`);
       return;
     }
 
-    // Redirect directly to dashboard based on role
-    const dashboard = role === "owner" ? "/owner" : "/setter";
-    router.push(dashboard);
+    // Redirect to dashboard
+    router.push("/setter");
+    router.refresh();
+  }
+
+  async function handleOwnerLogin(email: string, password: string) {
+    setLoading("owner");
+    setError(null);
+
+    const res = await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    });
+
+    setLoading(null);
+
+    if (res?.error) {
+      setError("Failed to sign in as Owner. Please check database connection.");
+      return;
+    }
+
+    // Redirect to owner dashboard
+    router.push("/owner");
     router.refresh();
   }
 
@@ -85,16 +93,26 @@ export default function LoginPage() {
 
         {error && <p className="text-sm text-red-400">{error}</p>}
 
-        <button
-          onClick={() => handleLogin("setter")}
-          disabled={loading !== null || initializing}
-          className="w-full rounded-md bg-blue-600 py-3 font-medium text-white hover:bg-blue-700 disabled:opacity-50 transition"
-        >
-          {loading === "setter" ? "Signing in..." : "Login Angel Cruz (Setter)"}
-        </button>
+        <div className="space-y-2">
+          <button
+            onClick={() => handleLogin("angelcruzgabriel44@gmail.com", "15598654Aa", "Angel Cruz")}
+            disabled={loading !== null || initializing}
+            className="w-full rounded-md bg-blue-600 py-3 font-medium text-white hover:bg-blue-700 disabled:opacity-50 transition"
+          >
+            {loading === "setter" ? "Signing in..." : "Login Angel Cruz (Setter)"}
+          </button>
+
+          <button
+            onClick={() => handleLogin("alanortiz44@gmail.com", "26749531Bo", "Alan Ortiz")}
+            disabled={loading !== null || initializing}
+            className="w-full rounded-md bg-blue-600 py-3 font-medium text-white hover:bg-blue-700 disabled:opacity-50 transition"
+          >
+            {loading === "setter" ? "Signing in..." : "Login Alan Ortiz (Setter)"}
+          </button>
+        </div>
 
         <button
-          onClick={() => handleLogin("owner")}
+          onClick={() => handleOwnerLogin("acmarketing02023@gmail.com", "64186418Am")}
           disabled={loading !== null || initializing}
           className="w-full rounded-md bg-purple-600 py-3 font-medium text-white hover:bg-purple-700 disabled:opacity-50 transition"
         >
