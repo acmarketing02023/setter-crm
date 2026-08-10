@@ -37,7 +37,7 @@ export async function POST(request: Request) {
         phone: phone || null,
         outcome,
         note: note || `[Auto-logged from scraper]`,
-        setterId: null, // No setter for scraper calls
+       setterId: "system", // System user for scraper calls
       },
     });
 
