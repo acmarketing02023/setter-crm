@@ -193,19 +193,23 @@ export async function getAccountPipelines(): Promise<any[] | null> {
   }
 
   try {
+    console.log("Calling GHL API:", `${GHL_API_BASE_URL}/pipelines/`);
     const response = await fetch(`${GHL_API_BASE_URL}/pipelines/`, {
       headers: {
         Authorization: `Bearer ${GHL_API_KEY}`,
       },
     });
 
+    console.log("GHL API Response status:", response.status);
+
     if (!response.ok) {
       const error = await response.text();
-      console.error("Failed to fetch pipelines from GHL:", error);
+      console.error("Failed to fetch pipelines from GHL. Status:", response.status, "Error:", error);
       return null;
     }
 
     const result = await response.json();
+    console.log("GHL API Response body:", JSON.stringify(result));
     return result.pipelines || [];
   } catch (error) {
     console.error("Error fetching pipelines from GHL:", error);
