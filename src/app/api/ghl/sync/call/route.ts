@@ -47,7 +47,7 @@ export async function POST(request: Request) {
       phone: call.phone || undefined,
       source: "Setter CRM - Cold Call",
       customFields: {
-        "setter_name": call.setter.name,
+        "setter_name": call.setter?.name || "Unknown Setter",
         "call_outcome": call.outcome,
         "call_notes": call.note || "",
         "call_date": call.createdAt.toISOString(),
@@ -80,7 +80,7 @@ export async function POST(request: Request) {
         value: 3000, // Default value per booking
         source: "Setter CRM",
         customFields: {
-          "setter_name": call.setter.name,
+          "setter_name": call.setter?.name || "Unknown Setter",
           "booking_date": call.booking.scheduledAt.toISOString(),
           "setter_notes": call.booking.setterNotes,
         },

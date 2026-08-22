@@ -38,7 +38,7 @@ export async function autoSyncCallToGHL(callId: string) {
       phone: call.phone || undefined,
       source: "Setter CRM - Cold Call",
       customFields: {
-        setter_name: call.setter.name,
+        setter_name: call.setter?.name || "Unknown Setter",
         call_outcome: call.outcome,
         call_notes: call.note || "",
         call_date: call.createdAt.toISOString(),
@@ -92,7 +92,7 @@ export async function autoSyncBookingToGHL(bookingId: string) {
         phone: booking.phone || undefined,
         source: "Setter CRM - Booking",
         customFields: {
-          setter_name: booking.setter.name,
+          setter_name: booking.setter?.name || "Unknown Setter",
           closer_briefing: booking.closerBriefing,
         },
       });
@@ -127,7 +127,7 @@ export async function autoSyncBookingToGHL(bookingId: string) {
         value: 3000,
         source: booking.source,
         customFields: {
-          setter_name: booking.setter.name,
+          setter_name: booking.setter?.name || "Unknown Setter",
           booking_status: booking.status,
           setter_notes: booking.setterNotes,
         },
@@ -159,7 +159,7 @@ export async function autoSyncBookingToGHL(bookingId: string) {
         customerId: ghlContactId,
         customFields: {
           booking_id: bookingId,
-          setter_name: booking.setter.name,
+          setter_name: booking.setter?.name || "Unknown Setter",
         },
       };
 

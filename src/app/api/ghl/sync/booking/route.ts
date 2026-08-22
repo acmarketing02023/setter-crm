@@ -57,7 +57,7 @@ export async function POST(request: Request) {
         phone: booking.phone || undefined,
         source: "Setter CRM - Booking",
         customFields: {
-          "setter_name": booking.setter.name,
+          "setter_name": booking.setter?.name || "Unknown Setter",
           "closer_briefing": booking.closerBriefing,
         },
       });
@@ -98,7 +98,7 @@ export async function POST(request: Request) {
         value: 3000, // Default booking value
         source: booking.source,
         customFields: {
-          "setter_name": booking.setter.name,
+          "setter_name": booking.setter?.name || "Unknown Setter",
           "booking_status": booking.status,
           "setter_notes": booking.setterNotes,
         },
@@ -139,7 +139,7 @@ export async function POST(request: Request) {
         customerId: ghlContactId,
         customFields: {
           "booking_id": bookingId,
-          "setter_name": booking.setter.name,
+          "setter_name": booking.setter?.name || "Unknown Setter",
         },
       };
 
