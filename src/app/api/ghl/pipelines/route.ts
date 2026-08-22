@@ -20,13 +20,23 @@ export async function GET() {
     }
 
     // Fetch all pipelines from GHL
+    console.log("Fetching pipelines with API Key:", process.env.GHL_API_KEY?.substring(0, 10) + "...");
+    console.log("Account ID:", process.env.GHL_ACCOUNT_ID);
+
     const pipelines = await getAccountPipelines();
+
+    console.log("Pipelines response:", pipelines);
 
     if (!pipelines || pipelines.length === 0) {
       return Response.json({
         success: false,
         error: "No pipelines found in your GHL account",
         hint: "Create at least one pipeline in GHL first",
+        debug: {
+          apiKeySet: !!process.env.GHL_API_KEY,
+          accountIdSet: !!process.env.GHL_ACCOUNT_ID,
+          pipelinesResponse: pipelines,
+        },
       });
     }
 
