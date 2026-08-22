@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { notifySlack } from "@/lib/notify";
+import { autoSyncCallToGHL } from "@/lib/ghl-sync";
 import { CallOutcome } from "@prisma/client";
 
 // API key for scraper authentication
@@ -80,6 +81,11 @@ export async function POST(request: Request) {
       `:phone: Call logged by ${session.user.name}: *${contractorName}* (${phone || "no phone"}) — ${outcome}`
     );
   }
+
+  // Auto-sync to GHL in background (don't block response)
+  autoSyncCallToGHL(call.id).catch((error) => {
+    console.error("Background GHL sync failed:", error);
+  });
 
   return NextResponse.json(call, { status: 201 });
 }

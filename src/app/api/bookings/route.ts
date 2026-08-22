@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { autoSyncBookingToGHL } from "@/lib/ghl-sync";
 
 export async function GET() {
   const session = await auth();
@@ -49,6 +50,11 @@ export async function POST(request: Request) {
       setterNotes,
       closerBriefing,
     },
+  });
+
+  // Auto-sync to GHL in background (don't block response)
+  autoSyncBookingToGHL(booking.id).catch((error) => {
+    console.error("Background GHL sync failed:", error);
   });
 
   return NextResponse.json(booking, { status: 201 });

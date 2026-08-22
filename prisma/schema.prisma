@@ -55,6 +55,11 @@ setterId        String?
   note            String?
   createdAt       DateTime    @default(now())
 
+  // GHL Integration
+  ghlContactId    String?
+  ghlOpporturityId String?
+  ghlSyncedAt     DateTime?
+
   booking         Booking?
 }
 
@@ -73,4 +78,10 @@ model Booking {
   source          BookingSource @default(SETTER_DIRECT)
   createdAt       DateTime      @default(now())
   viewedAt        DateTime?
+
+  // GHL Integration
+  ghlContactId    String?
+  ghlOpportunityId String?
+  ghlAppointmentId String?
+  ghlSyncedAt     DateTime?
 }
