@@ -62,17 +62,6 @@ export async function GET() {
 
     const pipelines = formattedPipelines;
 
-    // Format the response to show pipeline and stage info
-    const formattedPipelines = pipelines.map((pipeline: any) => ({
-      id: pipeline.id,
-      name: pipeline.name,
-      stages: (pipeline.stages || []).map((stage: any) => ({
-        id: stage.id,
-        name: stage.name,
-        description: stage.description || "",
-      })),
-    }));
-
     return Response.json({
       success: true,
       message:
