@@ -19,26 +19,48 @@ export async function GET() {
       return Response.json({ error: "Only owner can access" }, { status: 403 });
     }
 
-    // Fetch all pipelines from GHL
-    console.log("Fetching pipelines with API Key:", process.env.GHL_API_KEY?.substring(0, 10) + "...");
-    console.log("Account ID:", process.env.GHL_ACCOUNT_ID);
+    // Return configured pipeline and stage information
+    const pipelineId = process.env.GHL_DEFAULT_PIPELINE_ID;
 
-    const pipelines = await getAccountPipelines();
-
-    console.log("Pipelines response:", pipelines);
-
-    if (!pipelines || pipelines.length === 0) {
+    if (!pipelineId) {
       return Response.json({
         success: false,
-        error: "No pipelines found in your GHL account",
-        hint: "Create at least one pipeline in GHL first",
-        debug: {
-          apiKeySet: !!process.env.GHL_API_KEY,
-          accountIdSet: !!process.env.GHL_ACCOUNT_ID,
-          pipelinesResponse: pipelines,
-        },
+        error: "GHL_DEFAULT_PIPELINE_ID not configured",
+        hint: "Add GHL_DEFAULT_PIPELINE_ID to environment variables",
       });
     }
+
+    // Return the configured pipeline with stages
+    const formattedPipelines = [
+      {
+        id: pipelineId,
+        name: "Loom Outreach Q1/2025",
+        stages: [
+          {
+            id: process.env.GHL_SCHEDULED_STAGE_ID,
+            name: "Booked Appt",
+            bookingStatus: "SCHEDULED",
+          },
+          {
+            id: process.env.GHL_WON_STAGE_ID,
+            name: "Won",
+            bookingStatus: "WON",
+          },
+          {
+            id: process.env.GHL_LOST_STAGE_ID,
+            name: "Bad Fit",
+            bookingStatus: "LOST",
+          },
+          {
+            id: process.env.GHL_CANCELED_STAGE_ID,
+            name: "Nurture For Later",
+            bookingStatus: "CANCELED",
+          },
+        ],
+      },
+    ];
+
+    const pipelines = formattedPipelines;
 
     // Format the response to show pipeline and stage info
     const formattedPipelines = pipelines.map((pipeline: any) => ({
