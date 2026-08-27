@@ -1,7 +1,8 @@
-// GoHighLevel API Integration
-const GHL_API_BASE_URL = "https://rest.gohighlevel.com/v1";
+// GoHighLevel API Integration (v3 - Private Integration Token)
+const GHL_API_BASE_URL = "https://services.leadconnectorhq.com";
 const GHL_API_KEY = process.env.GHL_API_KEY || "";
-const GHL_ACCOUNT_ID = process.env.GHL_ACCOUNT_ID || "";
+const GHL_LOCATION_ID = process.env.GHL_LOCATION_ID || "";
+const GHL_API_VERSION = "2021-07-28";
 
 export interface GHLContact {
   firstName?: string;
@@ -36,7 +37,7 @@ export interface GHLAppointment {
 export async function syncContactToGHL(
   data: GHLContact
 ): Promise<{ id: string } | null> {
-  if (!GHL_API_KEY || !GHL_ACCOUNT_ID) {
+  if (!GHL_API_KEY || !GHL_LOCATION_ID) {
     console.warn("GHL API credentials not configured");
     return null;
   }
@@ -47,6 +48,8 @@ export async function syncContactToGHL(
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${GHL_API_KEY}`,
+        Version: GHL_API_VERSION,
+        locationId: GHL_LOCATION_ID,
       },
       body: JSON.stringify({
         ...data,
@@ -75,7 +78,7 @@ export async function createOpportunityInGHL(
   contactId: string,
   data: GHLOpportunity
 ): Promise<{ id: string } | null> {
-  if (!GHL_API_KEY || !GHL_ACCOUNT_ID) {
+  if (!GHL_API_KEY || !GHL_LOCATION_ID) {
     console.warn("GHL API credentials not configured");
     return null;
   }
@@ -86,6 +89,8 @@ export async function createOpportunityInGHL(
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${GHL_API_KEY}`,
+        Version: GHL_API_VERSION,
+        locationId: GHL_LOCATION_ID,
       },
       body: JSON.stringify({
         ...data,
@@ -114,7 +119,7 @@ export async function createOpportunityInGHL(
 export async function createAppointmentInGHL(
   data: GHLAppointment
 ): Promise<{ id: string } | null> {
-  if (!GHL_API_KEY || !GHL_ACCOUNT_ID) {
+  if (!GHL_API_KEY || !GHL_LOCATION_ID) {
     console.warn("GHL API credentials not configured");
     return null;
   }
@@ -125,6 +130,8 @@ export async function createAppointmentInGHL(
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${GHL_API_KEY}`,
+        Version: GHL_API_VERSION,
+        locationId: GHL_LOCATION_ID,
       },
       body: JSON.stringify(data),
     });
@@ -150,7 +157,7 @@ export async function updateOpportunityStageInGHL(
   opportunityId: string,
   pipelineStageId: string
 ): Promise<boolean> {
-  if (!GHL_API_KEY || !GHL_ACCOUNT_ID) {
+  if (!GHL_API_KEY || !GHL_LOCATION_ID) {
     console.warn("GHL API credentials not configured");
     return false;
   }
@@ -163,6 +170,8 @@ export async function updateOpportunityStageInGHL(
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${GHL_API_KEY}`,
+          Version: GHL_API_VERSION,
+          locationId: GHL_LOCATION_ID,
         },
         body: JSON.stringify({
           pipelineStageId,
@@ -187,7 +196,7 @@ export async function updateOpportunityStageInGHL(
  * Get account pipelines for mapping booking stages
  */
 export async function getAccountPipelines(): Promise<any[] | null> {
-  if (!GHL_API_KEY || !GHL_ACCOUNT_ID) {
+  if (!GHL_API_KEY || !GHL_LOCATION_ID) {
     console.warn("GHL API credentials not configured");
     return null;
   }
@@ -197,6 +206,8 @@ export async function getAccountPipelines(): Promise<any[] | null> {
     const response = await fetch(`${GHL_API_BASE_URL}/pipelines/`, {
       headers: {
         Authorization: `Bearer ${GHL_API_KEY}`,
+        Version: GHL_API_VERSION,
+        locationId: GHL_LOCATION_ID,
       },
     });
 
