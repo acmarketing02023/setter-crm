@@ -8,14 +8,20 @@ export async function POST() {
     const password = "26749531Bo";
     const passwordHash = await bcrypt.hash(password, 10);
 
-    const user = await prisma.user.update({
+    const user = await prisma.user.upsert({
       where: { email: "brandon.cervantes@setter-crm.local" },
-      data: { passwordHash },
+      update: { passwordHash },
+      create: {
+        name: "Brandon Cervantes",
+        email: "brandon.cervantes@setter-crm.local",
+        passwordHash,
+        role: "SETTER",
+      },
     });
 
     return Response.json({
       success: true,
-      message: "Brandon's password has been fixed!",
+      message: "Brandon Cervantes has been added/updated!",
       user: { id: user.id, name: user.name, email: user.email },
     });
   } catch (error: any) {
