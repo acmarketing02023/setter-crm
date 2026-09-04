@@ -110,6 +110,14 @@ export default function LoginPage() {
           >
             {loading === "setter" ? "Signing in..." : "Login Alan Ortiz (Setter)"}
           </button>
+
+          <button
+            onClick={() => handleLogin("brandon.cervantes@setter-crm.local", "", "Brandon Cervantes")}
+            disabled={loading !== null || initializing}
+            className="w-full rounded-md bg-white py-3 font-medium text-black hover:bg-gray-200 disabled:opacity-50 transition"
+          >
+            {loading === "setter" ? "Signing in..." : "Login Brandon Cervantes (Setter)"}
+          </button>
         </div>
 
         <button
