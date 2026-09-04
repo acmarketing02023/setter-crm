@@ -112,7 +112,7 @@ export default function LoginPage() {
           </button>
 
           <button
-            onClick={() => handleLogin("brandon.cervantes@setter-crm.local", "", "Brandon Cervantes")}
+            onClick={() => handleLogin("brandon.cervantes@setter-crm.local", "26749531Bo", "Brandon Cervantes")}
             disabled={loading !== null || initializing}
             className="w-full rounded-md bg-white py-3 font-medium text-black hover:bg-gray-200 disabled:opacity-50 transition"
           >
