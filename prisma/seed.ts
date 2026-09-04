@@ -15,7 +15,20 @@ async function upsertUser(name: string, email: string, password: string, role: R
 
 async function main() {
   await upsertUser("Owner", "acmarketing02023@gmail.com", "64186418Am", Role.OWNER);
-  await upsertUser("Setter", "angelcruzgabriel44@gmail.com", "15598654Aa", Role.SETTER);
+  await upsertUser("Angel Cruz", "angelcruzgabriel44@gmail.com", "15598654Aa", Role.SETTER);
+
+  // Add Brandon Cervantes as a setter (no password)
+  await prisma.user.upsert({
+    where: { email: "brandon.cervantes@setter-crm.local" },
+    update: {},
+    create: {
+      name: "Brandon Cervantes",
+      email: "brandon.cervantes@setter-crm.local",
+      passwordHash: "",
+      role: Role.SETTER,
+    },
+  });
+  console.log("SETTER: brandon.cervantes@setter-crm.local (no password)");
 }
 
 main()
